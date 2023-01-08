@@ -1,9 +1,22 @@
 <div class="container">
-  <div class="row">
+  <div class="row text-center">
     <div class="col-xs-12">
       <h1>Absents App 2023</h1>
-      <hr>
-      <app-students-list></app-students-list>
     </div>
   </div>
+  <hr />
+  <div class="row text-center">
+    <div class="col-xs-6">
+      <button class="btn btn-danger btn-lg" (click)="onManage()">Manage</button>
+    </div>
+    <div class="col-xs-6">
+      <button class="btn btn-success btn-lg" (click)="onInsert()">
+        Insert
+      </button>
+    </div>
+  </div>
+  <app-students-absent-late-list
+    *ngIf="showInsert"
+  ></app-students-absent-late-list>
+  <app-students-manage-list *ngIf="showManage"></app-students-manage-list>
 </div>
