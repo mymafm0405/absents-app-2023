@@ -7,6 +7,11 @@ import { StudentReportComponent } from './components/student-report/student-repo
 import { StudentManageComponent } from './components/student-manage/student-manage.component';
 import { GradeComponent } from './components/grade/grade.component';
 import { ClassComponent } from './components/class/class.component';
+import { StudentsAbsentLateListComponent } from './components/students-absent-late-list/students-absent-late-list.component';
+import { StudentsManageListComponent } from './components/students-manage-list/students-manage-list.component';
+import { StudentsReportListComponent } from './components/students-report-list/students-report-list.component';
+import { GradesListComponent } from './components/grades-list/grades-list.component';
+import { ClassesListComponent } from './components/classes-list/classes-list.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +21,11 @@ import { ClassComponent } from './components/class/class.component';
     StudentManageComponent,
     GradeComponent,
     ClassComponent,
+    StudentsAbsentLateListComponent,
+    StudentsManageListComponent,
+    StudentsReportListComponent,
+    GradesListComponent,
+    ClassesListComponent,
   ],
   imports: [
     BrowserModule

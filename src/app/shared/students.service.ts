@@ -8,8 +8,8 @@ import { Student } from './student.model';
 })
 export class StudentsService {
   students: Student[] = [
-    new Student('1', 'Mahmoud Yhya', 7, 1, 66548110, false, false, '', '2023-01-08'),
-    new Student('2', 'Basem Yhya', 8, 1, 50001953, false, false, '', '2023-01-08'),
+    new Student('1', 'Mahmoud Yhya', 7, 1, 66548110, false, false, '', ''),
+    new Student('2', 'Basem Yhya', 8, 1, 50001953, false, false, '', ''),
   ];
 
   grades: Grade[] = [
