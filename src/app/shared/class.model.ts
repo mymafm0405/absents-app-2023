@@ -1,7 +1,7 @@
 export class Class {
   constructor(
     public id: string,
-    public gradeId: string,
+    public gradeNum: number,
     public classNum: number,
     public name: string
   ) {}

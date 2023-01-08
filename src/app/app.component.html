@@ -15,8 +15,6 @@
       </button>
     </div>
   </div>
-  <app-students-absent-late-list
-    *ngIf="showInsert"
-  ></app-students-absent-late-list>
+  <app-grades-list *ngIf="showInsert"></app-grades-list>
   <app-students-manage-list *ngIf="showManage"></app-students-manage-list>
 </div>

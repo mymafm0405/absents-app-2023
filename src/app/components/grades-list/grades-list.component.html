@@ -1,1 +1,11 @@
-<p>grades-list works!</p>
+<div class="row">
+  <div class="col-xs-12" *ngIf="grades.length > 0">
+    <!-- loop through all grades -->
+    <app-grade *ngFor="let grade of grades" [grade]="grade"></app-grade>
+  </div>
+</div>
+<div class="row" *ngIf="showClassesList">
+    <div class="col-xs-12">
+        <app-classes-list [currentActiveGrade]="currentActiveGrade"></app-classes-list>
+    </div>
+</div>
