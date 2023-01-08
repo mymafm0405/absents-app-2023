@@ -4,5 +4,19 @@
       <h1>Absents App 2023</h1>
     </div>
   </div>
-  <hr>
+  <hr />
+  <div class="row text-center">
+    <div class="col-xs-6">
+      <button class="btn btn-danger btn-lg" (click)="onManage()">Manage</button>
+    </div>
+    <div class="col-xs-6">
+      <button class="btn btn-success btn-lg" (click)="onInsert()">
+        Insert
+      </button>
+    </div>
+  </div>
+  <app-students-absent-late-list
+    *ngIf="showInsert"
+  ></app-students-absent-late-list>
+  <app-students-manage-list *ngIf="showManage"></app-students-manage-list>
 </div>
