@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Student } from 'src/app/shared/student.model';
 
 @Component({
   selector: 'app-student-absent-late',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./student-absent-late.component.css']
 })
 export class StudentAbsentLateComponent {
-
+  @Input() student: Student;
 }

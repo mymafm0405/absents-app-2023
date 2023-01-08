@@ -9,12 +9,18 @@ import { Student } from './student.model';
 })
 export class StudentsService {
   gradeActiveStatus = new Subject<boolean>();
+  classActiveStatus = new Subject<boolean>();
 
   currentActiveGrade: number;
+  currentActiveClass: number;
 
   students: Student[] = [
     new Student('1', 'Mahmoud Yhya', 7, 1, 66548110, false, false, '', ''),
-    new Student('2', 'Basem Yhya', 8, 1, 50001953, false, false, '', ''),
+    new Student('2', 'Mido', 7, 1, 66548110, false, false, '', ''),
+    new Student('3', 'Ahmed', 7, 1, 66548110, false, false, '', ''),
+    new Student('4', 'Ismail', 8, 1, 50001953, false, false, '', ''),
+    new Student('5', 'Hamad', 8, 1, 50001953, false, false, '', ''),
+    new Student('6', 'Adel', 8, 1, 50001953, false, false, '', ''),
   ];
 
   grades: Grade[] = [
@@ -48,10 +54,21 @@ export class StudentsService {
 
   changeGradeActiveStatus(status: boolean) {
     this.gradeActiveStatus.next(status);
-    this.currentActiveGrade = null;
+    if (status) {
+      this.currentActiveGrade = null;
+    }
   }
-
   setCurrentActiveGrade(gradeNum: number) {
     this.currentActiveGrade = gradeNum;
+  }
+
+  changeClassActiveStatus(status: boolean) {
+    this.classActiveStatus.next(status);
+    if (status) {
+      this.currentActiveClass = null;
+    }
+  }
+  setCurrentActiveClass(classNum: number) {
+    this.currentActiveClass = classNum;
   }
 }

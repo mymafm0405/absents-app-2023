@@ -1,1 +1,18 @@
-<p>students-absent-late-list works!</p>
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Students List</h3>
+  </div>
+</div>
+<div class="row" *ngIf="students.length > 0">
+  <div class="col-xs-12">
+    <app-student-absent-late
+      *ngFor="let student of students"
+      [student]="student"
+    ></app-student-absent-late>
+  </div>
+</div>
+<div class="row" *ngIf="students.length === 0">
+  <div class="col-xs-12">
+    <h4>No students in this class</h4>
+  </div>
+</div>
