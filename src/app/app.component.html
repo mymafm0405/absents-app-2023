@@ -7,7 +7,7 @@
   <hr />
   <div class="row text-center">
     <div class="col-xs-6">
-      <button class="btn btn-danger btn-lg" (click)="onManage()">Manage</button>
+      <button class="btn btn-danger btn-lg" (click)="onManage()" [disabled]="saving">Manage</button>
     </div>
     <div class="col-xs-6">
       <button class="btn btn-success btn-lg" (click)="onInsert()">

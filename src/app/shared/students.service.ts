@@ -10,6 +10,7 @@ import { Student } from './student.model';
 export class StudentsService {
   gradeActiveStatus = new Subject<boolean>();
   classActiveStatus = new Subject<boolean>();
+  savingStatus = new Subject<boolean>();
 
   currentActiveGrade: number;
   currentActiveClass: number;

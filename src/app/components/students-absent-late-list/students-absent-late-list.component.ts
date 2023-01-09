@@ -22,6 +22,10 @@ export class StudentsAbsentLateListComponent {
       this.stuServ.currentActiveGrade,
       this.stuServ.currentActiveClass
     );
+
+    this.stuServ.savingStatus.subscribe((status) => {
+      this.saving = status;
+    })
   }
 
   onCloseClass() {
@@ -29,10 +33,9 @@ export class StudentsAbsentLateListComponent {
   }
 
   onSaveClass() {
-    this.saving = true;
+    this.stuServ.savingStatus.next(true)
     setTimeout(() => {
-      this.saving = false;
+      this.stuServ.savingStatus.next(false);
     }, 2000)
-    console.log('saved')
   }
 }

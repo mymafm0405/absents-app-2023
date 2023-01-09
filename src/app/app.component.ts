@@ -10,6 +10,7 @@ export class AppComponent {
   showManage = false;
   showInsert = false;
   showAbsLateList = false;
+  saving = false;
 
   constructor(public stuServ: StudentsService) {}
 
@@ -17,6 +18,10 @@ export class AppComponent {
     this.stuServ.classActiveStatus.subscribe((status) => {
       this.showAbsLateList = !status;
     });
+
+    this.stuServ.savingStatus.subscribe((status) => {
+      this.saving = status;
+    })
   }
 
   onManage() {
