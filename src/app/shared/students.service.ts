@@ -63,7 +63,6 @@ export class StudentsService {
   }
 
   changeClassActiveStatus(status: boolean) {
-    console.log(this.currentActiveClass)
     this.classActiveStatus.next(status);
     if (status) {
       this.currentActiveClass = null;

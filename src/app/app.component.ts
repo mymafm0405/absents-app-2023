@@ -22,6 +22,7 @@ export class AppComponent {
   onManage() {
     this.showManage = true;
     this.showInsert = false;
+    this.showAbsLateList = false;
   }
 
   onInsert() {

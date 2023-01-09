@@ -1,1 +1,42 @@
-<h4>{{ student.name }}</h4>
+<div
+  class="row"
+  [ngClass]="{
+    red: absentStatus.length > 0,
+    green: absentStatus.length === 0 && !lateStatus,
+    orange: lateStatus && absentStatus.length === 0
+  }"
+>
+  <div class="col-xs-3">
+    {{ student.phone }}
+  </div>
+  <div class="col-xs-3">
+    <input
+      type="checkbox"
+      class="form-control"
+      name="late"
+      [(ngModel)]="lateStatus"
+      value="1"
+      (change)="onLateChange($event)"
+      [disabled]="lateDisabled"
+    />
+  </div>
+  <div class="col-xs-3">
+    <select
+      name="absent"
+      class="form-control"
+      [(ngModel)]="absentStatus"
+      (change)="onAbsentChange($event)"
+      [disabled]="absDisabled"
+    >
+      <option value="" selected></option>
+      <option value="1">Absent 1</option>
+      <option value="2">Absent 2</option>
+      <option value="3">Absent 3</option>
+      <option value="4">Absent 4</option>
+      <option value="5">Absent 5</option>
+    </select>
+  </div>
+  <div class="col-xs-3">
+    {{ student.name }}
+  </div>
+</div>

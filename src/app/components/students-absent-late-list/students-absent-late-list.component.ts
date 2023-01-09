@@ -12,6 +12,7 @@ export class StudentsAbsentLateListComponent {
   constructor(public stuServ: StudentsService) {}
   currentActiveGrade: number;
   currentActiveClass: number;
+  saving = false;
 
   ngOnInit() {
     this.currentActiveGrade = this.stuServ.currentActiveGrade;
@@ -21,18 +22,17 @@ export class StudentsAbsentLateListComponent {
       this.stuServ.currentActiveGrade,
       this.stuServ.currentActiveClass
     );
-    // this.stuServ.classActiveStatus.subscribe((status) => {
-    //   console.log(status);
-    //   if (!status) {
-    //     this.students = this.stuServ.getStudentsByGradeAndClass(
-    //       this.stuServ.currentActiveGrade,
-    //       this.stuServ.currentActiveClass
-    //     );
-    //   }
-    // });
   }
 
   onCloseClass() {
     this.stuServ.changeClassActiveStatus(true);
+  }
+
+  onSaveClass() {
+    this.saving = true;
+    setTimeout(() => {
+      this.saving = false;
+    }, 2000)
+    console.log('saved')
   }
 }

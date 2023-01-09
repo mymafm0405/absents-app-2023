@@ -12,6 +12,8 @@ import { StudentsManageListComponent } from './components/students-manage-list/s
 import { StudentsReportListComponent } from './components/students-report-list/students-report-list.component';
 import { GradesListComponent } from './components/grades-list/grades-list.component';
 import { ClassesListComponent } from './components/classes-list/classes-list.component';
+import { LoadingComponent } from './utilities/loading/loading.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,9 +28,11 @@ import { ClassesListComponent } from './components/classes-list/classes-list.com
     StudentsReportListComponent,
     GradesListComponent,
     ClassesListComponent,
+    LoadingComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

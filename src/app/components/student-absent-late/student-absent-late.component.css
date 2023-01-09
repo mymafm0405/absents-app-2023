@@ -1,0 +1,14 @@
+.row {
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+}
+.red {
+    background-color: #ffcccc;
+}
+.green {
+    background-color: #d0ffd0;
+}
+.orange {
+    background-color: #ffe2ac;
+}
