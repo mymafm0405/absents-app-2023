@@ -15,9 +15,9 @@ export class StudentsService {
   currentActiveClass: number;
 
   students: Student[] = [
-    new Student('1', 'Mahmoud Yhya', 7, 1, 66548110, false, false, '', ''),
+    new Student('1', 'Mahmoud Yhya', 7, 1, 66548110, false, true, '', ''),
     new Student('2', 'Mido', 7, 1, 66548110, false, false, '', ''),
-    new Student('3', 'Ahmed', 7, 1, 66548110, false, false, '', ''),
+    new Student('3', 'Ahmed', 7, 1, 66548110, true, false, '', ''),
     new Student('4', 'Ismail', 8, 1, 50001953, false, false, '', ''),
     new Student('5', 'Hamad', 8, 1, 50001953, false, false, '', ''),
     new Student('6', 'Adel', 8, 1, 50001953, false, false, '', ''),

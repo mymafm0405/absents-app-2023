@@ -1,9 +1,9 @@
 <div
   class="row"
   [ngClass]="{
-    red: absentStatus.length > 0,
-    green: absentStatus.length === 0 && !lateStatus,
-    orange: lateStatus && absentStatus.length === 0
+    red: absentStatus.length > 0 || student.absent,
+    green: absentStatus.length === 0 && !lateStatus && !student.absent && !student.late,
+    orange: lateStatus || student.late
   }"
 >
   <div class="col-xs-3">
@@ -17,7 +17,7 @@
       [(ngModel)]="lateStatus"
       value="1"
       (change)="onLateChange($event)"
-      [disabled]="lateDisabled"
+      [disabled]="lateDisabled || student.absent"
     />
   </div>
   <div class="col-xs-3">
@@ -26,7 +26,7 @@
       class="form-control"
       [(ngModel)]="absentStatus"
       (change)="onAbsentChange($event)"
-      [disabled]="absDisabled"
+      [disabled]="absDisabled || student.late"
     >
       <option value="" selected></option>
       <option value="1">Absent 1</option>

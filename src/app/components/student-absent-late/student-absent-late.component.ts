@@ -13,6 +13,10 @@ export class StudentAbsentLateComponent {
   absDisabled = false;
   lateDisabled = false;
 
+  ngOnInit() {
+    this.lateStatus = this.student.late;
+  }
+
   onAbsentChange(event: any) {
     // console.log((<HTMLSelectElement>event.target).value)
     if (event.target.value.length > 0) {
