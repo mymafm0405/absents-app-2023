@@ -10,16 +10,29 @@ import { StudentsService } from 'src/app/shared/students.service';
 export class StudentsAbsentLateListComponent {
   students: Student[] = [];
   constructor(public stuServ: StudentsService) {}
+  currentActiveGrade: number;
+  currentActiveClass: number;
 
   ngOnInit() {
-    this.stuServ.classActiveStatus.subscribe((status) => {
-      console.log(status);
-      if (!status) {
-        this.students = this.stuServ.getStudentsByGradeAndClass(
-          this.stuServ.currentActiveGrade,
-          this.stuServ.currentActiveClass
-        );
-      }
-    });
+    this.currentActiveGrade = this.stuServ.currentActiveGrade;
+    this.currentActiveClass = this.stuServ.currentActiveClass;
+
+    this.students = this.stuServ.getStudentsByGradeAndClass(
+      this.stuServ.currentActiveGrade,
+      this.stuServ.currentActiveClass
+    );
+    // this.stuServ.classActiveStatus.subscribe((status) => {
+    //   console.log(status);
+    //   if (!status) {
+    //     this.students = this.stuServ.getStudentsByGradeAndClass(
+    //       this.stuServ.currentActiveGrade,
+    //       this.stuServ.currentActiveClass
+    //     );
+    //   }
+    // });
+  }
+
+  onCloseClass() {
+    this.stuServ.changeClassActiveStatus(true);
   }
 }
