@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Student } from 'src/app/shared/student.model';
 
 @Component({
@@ -8,6 +8,29 @@ import { Student } from 'src/app/shared/student.model';
 })
 export class StudentAbsentLateComponent {
   @Input() student: Student;
+  @Output() absentChange = new EventEmitter<{
+    id: string;
+    absentValue: string;
+  }>();
+  // absentsOptions = [
+  //   '',
+  //   'غائب',
+  //   'معذور',
+  //   'مفصول',
+  //   'متقطع',
+  //   'خارج البلاد',
+  //   'عذر إداري',
+  //   'mm'
+  // ];
+  absentsOptions = [
+    {
+      value: 'mm',
+    },
+    {
+      value: 'oo',
+    },
+  ];
+
   absentStatus = '';
   lateStatus: boolean;
   absDisabled = false;
@@ -15,9 +38,10 @@ export class StudentAbsentLateComponent {
 
   ngOnInit() {
     this.lateStatus = this.student.late;
+    console.log(this.student);
   }
 
-  onAbsentChange(event: any) {
+  onAbsentChange(event: any, stuId: string) {
     // console.log((<HTMLSelectElement>event.target).value)
     if (event.target.value.length > 0) {
       this.lateDisabled = true;
@@ -25,6 +49,8 @@ export class StudentAbsentLateComponent {
     } else {
       this.lateDisabled = false;
     }
+    console.log({ id: stuId, absentValue: event.target.value });
+    this.absentChange.emit({ id: stuId, absentValue: event.target.value });
   }
 
   onLateChange(event: any) {

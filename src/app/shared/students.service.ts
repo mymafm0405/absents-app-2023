@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Class } from './class.model';
 import { Grade } from './grade.model';
+import { Status } from './status.model';
 import { Student } from './student.model';
 
 @Injectable({
@@ -35,14 +36,26 @@ export class StudentsService {
     new Class('2', 8, 1, 'Class 1'),
   ];
 
+  status: Status[] = [];
+
   getAllStudents() {
     return this.students;
   }
 
   getStudentsByGradeAndClass(gradeNum: number, classNum: number) {
-    return this.students.filter(
-      (stu) => stu.gradeNum === gradeNum && stu.classNum === classNum
+    // Check if there is status for same grade and class, if not return fresh students, if yes return status students
+    const date = new Date().toLocaleDateString();
+    const existStatus = this.status.find(
+      (st) =>
+        st.date === date && st.gradeNum === gradeNum && st.classNum === classNum
     );
+    if (existStatus) {
+      return existStatus.students;
+    } else {
+      return this.students.filter(
+        (stu) => stu.gradeNum === gradeNum && stu.classNum === classNum
+      );
+    }
   }
 
   getAllGrades() {
@@ -71,5 +84,21 @@ export class StudentsService {
   }
   setCurrentActiveClass(classNum: number) {
     this.currentActiveClass = classNum;
+  }
+
+  saveToStatus(currentStatus: Status) {
+    const existStatus = this.status.find(
+      (st) =>
+        st.date === currentStatus.date &&
+        st.gradeNum === currentStatus.gradeNum &&
+        st.classNum === currentStatus.classNum
+    );
+
+    if (existStatus) {
+      existStatus.students = currentStatus.students;
+    } else {
+      this.status.push(currentStatus);
+    }
+    console.log(this.status);
   }
 }

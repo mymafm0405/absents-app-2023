@@ -27,6 +27,7 @@
   <app-student-absent-late
     *ngFor="let student of students"
     [student]="student"
+    (absentChange)="changeStudentAbsentData($event)"
   ></app-student-absent-late>
 </div>
 <div class="row" *ngIf="students.length === 0">
