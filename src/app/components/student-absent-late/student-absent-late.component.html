@@ -20,9 +20,18 @@
       name="late"
       [(ngModel)]="lateStatus"
       value="1"
-      (change)="onLateChange($event)"
+      (change)="onLateChange($event, student.id)"
       [disabled]="lateDisabled || student.absent"
     />
+    <input
+      *ngIf="lateStatus"
+      type="text"
+      class="form-control"
+      [(ngModel)]="lateReason"
+      [value]="student.reason"
+      placeholder="Reason..."
+    />
+    <button class="btn btn-success" (click)="onSaveReason()" *ngIf="lateStatus">Save Reason</button>
   </div>
   <div class="col-xs-3">
     <select
@@ -32,12 +41,13 @@
       (change)="onAbsentChange($event, student.id)"
       [disabled]="absDisabled || student.late"
     >
+      <option value="" [defaultSelected]="absentStatus"></option>
       <option
         *ngFor="let opt of absentsOptions"
-        [value]="opt.value"
-        [ng-selected]="opt.value"
+        [value]="opt"
+        [selected]="absentStatus"
       >
-        {{ opt.value }}
+        {{ opt }}
       </option>
     </select>
   </div>

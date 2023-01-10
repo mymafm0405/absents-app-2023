@@ -33,7 +33,7 @@ export class StudentsAbsentLateListComponent {
     this.stuServ.changeClassActiveStatus(true);
   }
 
-  changeStudentAbsentData(stuData: {id: string, absentValue: string}) {
+  changeStudentAbsentData(stuData: { id: string; absentValue: string }) {
     const existStudent = this.students.find((stu) => stu.id === stuData.id);
     if (existStudent) {
       if (stuData.absentValue.length > 0) {
@@ -45,7 +45,26 @@ export class StudentsAbsentLateListComponent {
     }
   }
 
+  changeStudentLateData(stuData: {
+    id: string;
+    status: boolean;
+    reason: string;
+  }) {
+    console.log(stuData);
+    const existStudent = this.students.find((stu) => stu.id === stuData.id);
+    if (existStudent) {
+      if (stuData.status) {
+        existStudent.late = true;
+        existStudent.reason = stuData.reason;
+      } else {
+        existStudent.late = false;
+      }
+    }
+    console.log(existStudent);
+  }
+
   onSaveClass() {
+    // This should be changed when using http requests
     this.stuServ.savingStatus.next(true);
     setTimeout(() => {
       this.stuServ.savingStatus.next(false);
