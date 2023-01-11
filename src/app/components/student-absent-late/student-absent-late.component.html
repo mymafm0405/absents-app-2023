@@ -41,11 +41,10 @@
       (change)="onAbsentChange($event, student.id)"
       [disabled]="absDisabled || student.late"
     >
-      <option value="" [defaultSelected]="absentStatus"></option>
       <option
         *ngFor="let opt of absentsOptions"
         [value]="opt"
-        [selected]="absentStatus"
+        [selected]="absentStatus == true"
       >
         {{ opt }}
       </option>
