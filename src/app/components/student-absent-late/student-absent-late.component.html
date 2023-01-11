@@ -11,7 +11,11 @@
   }"
 >
   <div class="col-xs-3">
-    {{ student.phone }}
+    <button class="btn btn-default" (click)="togglePhone()">
+      <span *ngIf="!showPhone" class="glyphicon glyphicon-phone-alt"></span
+      ><span *ngIf="showPhone">Hide</span>
+    </button>
+    <h4 *ngIf="showPhone">{{ student.phone }}</h4>
   </div>
   <div class="col-xs-3">
     <input
@@ -31,7 +35,19 @@
       [value]="student.reason"
       placeholder="Reason..."
     />
-    <button class="btn btn-success" (click)="onSaveReason()" *ngIf="lateStatus">Save Reason</button>
+    <button
+      class="btn btn-success"
+      (click)="onSaveReason()"
+      *ngIf="lateStatus"
+      [disabled]="lateReason === student.reason && lateReasonMatched"
+    >
+      <span class="glyphicon glyphicon-floppy-saved"></span
+      ><span
+        *ngIf="lateReason !== student.reason"
+        style="color: orange"
+        class="glyphicon glyphicon-warning-sign"
+      ></span>
+    </button>
   </div>
   <div class="col-xs-3">
     <select

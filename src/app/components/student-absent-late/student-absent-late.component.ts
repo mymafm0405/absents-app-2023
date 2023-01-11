@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Student } from 'src/app/shared/student.model';
+import { StudentsService } from 'src/app/shared/students.service';
 
 @Component({
   selector: 'app-student-absent-late',
@@ -40,6 +41,10 @@ export class StudentAbsentLateComponent {
   absDisabled = false;
   lateDisabled = false;
   lateReason = '';
+  showPhone = false;
+  lateReasonMatched = true;
+
+  constructor(public studServ: StudentsService) {}
 
   ngOnInit() {
     this.lateStatus = this.student.late;
@@ -51,6 +56,7 @@ export class StudentAbsentLateComponent {
   }
 
   onAbsentChange(event: any, stuId: string) {
+    this.studServ.changeLateOrAbsentsStatus(true);
     if (event.target.value.length > 0) {
       this.lateDisabled = true;
       this.lateStatus = false;
@@ -62,6 +68,8 @@ export class StudentAbsentLateComponent {
   }
 
   onLateChange(event: any, stuId: string) {
+    this.studServ.changeLateOrAbsentsStatus(true);
+    this.lateReasonMatched = false;
     if (this.lateStatus) {
       this.absDisabled = true;
       this.absentStatus = '';
@@ -76,11 +84,17 @@ export class StudentAbsentLateComponent {
     });
   }
   onSaveReason() {
+    this.studServ.changeLateOrAbsentsStatus(true)
+    this.lateReasonMatched = true;
     this.lateChange.emit({
       id: this.student.id,
       status: this.lateStatus,
       reason: this.lateReason,
     });
     console.log(this.lateReason);
+  }
+
+  togglePhone() {
+    this.showPhone = !this.showPhone;
   }
 }

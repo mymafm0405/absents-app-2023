@@ -6,7 +6,7 @@
     </h3>
   </div>
   <div class="col-xs-2">
-    <button class="btn btn-success" (click)="onSaveClass()" [disabled]="saving">
+    <button class="btn btn-success" (click)="onSaveClass()" [disabled]="saving || !dataChanged">
       <app-loading *ngIf="saving"></app-loading>
       {{ !saving ? 'Save' : ''}}
     </button>

@@ -12,17 +12,18 @@ export class StudentsService {
   gradeActiveStatus = new Subject<boolean>();
   classActiveStatus = new Subject<boolean>();
   savingStatus = new Subject<boolean>();
+  lateOrAbsentsStatusChanged = new Subject<boolean>();
 
   currentActiveGrade: number;
   currentActiveClass: number;
 
   students: Student[] = [
-    new Student('1', 'Mahmoud Yhya', 7, 1, 66548110, false, true, '', ''),
-    new Student('2', 'Mido', 7, 1, 66548110, false, false, '', ''),
-    new Student('3', 'Ahmed', 7, 1, 66548110, true, false, '', ''),
-    new Student('4', 'Ismail', 8, 1, 50001953, false, false, '', ''),
-    new Student('5', 'Hamad', 8, 1, 50001953, false, false, '', ''),
-    new Student('6', 'Adel', 8, 1, 50001953, false, false, '', ''),
+    new Student('1', 'Mahmoud Yhya', 7, 1, 66548110, false, true, 'Nothing'),
+    new Student('2', 'Mido', 7, 1, 66548110, false, false, ''),
+    new Student('3', 'Ahmed', 7, 1, 66548110, true, false, 'خارج البلاد'),
+    new Student('4', 'Ismail', 8, 1, 50001953, false, false, ''),
+    new Student('5', 'Hamad', 8, 1, 50001953, false, false, ''),
+    new Student('6', 'Adel', 8, 1, 50001953, false, false, ''),
   ];
 
   grades: Grade[] = [
@@ -100,5 +101,9 @@ export class StudentsService {
       this.status.push(currentStatus);
     }
     console.log(this.status);
+  }
+
+  changeLateOrAbsentsStatus(status: boolean) {
+    this.lateOrAbsentsStatusChanged.next(status);
   }
 }

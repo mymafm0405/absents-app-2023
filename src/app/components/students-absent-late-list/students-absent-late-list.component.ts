@@ -14,6 +14,7 @@ export class StudentsAbsentLateListComponent {
   currentActiveGrade: number;
   currentActiveClass: number;
   saving = false;
+  dataChanged = false;
 
   ngOnInit() {
     this.currentActiveGrade = this.stuServ.currentActiveGrade;
@@ -27,6 +28,10 @@ export class StudentsAbsentLateListComponent {
     this.stuServ.savingStatus.subscribe((status) => {
       this.saving = status;
     });
+
+    this.stuServ.lateOrAbsentsStatusChanged.subscribe(status => {
+      this.dataChanged = status;
+    })
   }
 
   onCloseClass() {
@@ -64,6 +69,7 @@ export class StudentsAbsentLateListComponent {
   }
 
   onSaveClass() {
+    this.stuServ.changeLateOrAbsentsStatus(false);
     // This should be changed when using http requests
     this.stuServ.savingStatus.next(true);
     setTimeout(() => {
