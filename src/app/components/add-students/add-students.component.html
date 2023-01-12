@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-xs-4">
+    <input type="file" class="form-control" />
+    <button class="btn btn-info">Load & Replace</button>
+  </div>
+  <div class="col-xs-8">
+    <input type="text" class="form-control" placeholder="Student name" [(ngModel)]="studentName" />
+    <input type="text" class="form-control" placeholder="Phone number" [(ngModel)]="studentPhone" />
+    <button class="btn btn-primary" (click)="onAddStudent()" [disabled]="studentName.trim().length === 0 || studentPhone.trim().length === 0">Add student</button>
+</div>
+</div>

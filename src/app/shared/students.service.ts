@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Class } from './class.model';
 import { Grade } from './grade.model';
+import { Status } from './status.model';
 import { Student } from './student.model';
 
 @Injectable({
@@ -10,17 +11,20 @@ import { Student } from './student.model';
 export class StudentsService {
   gradeActiveStatus = new Subject<boolean>();
   classActiveStatus = new Subject<boolean>();
+  savingStatus = new Subject<boolean>();
+  lateOrAbsentsStatusChanged = new Subject<boolean>();
+  studentsUpdated = new Subject<boolean>();
 
   currentActiveGrade: number;
   currentActiveClass: number;
 
   students: Student[] = [
-    new Student('1', 'Mahmoud Yhya', 7, 1, 66548110, false, false, '', ''),
-    new Student('2', 'Mido', 7, 1, 66548110, false, false, '', ''),
-    new Student('3', 'Ahmed', 7, 1, 66548110, false, false, '', ''),
-    new Student('4', 'Ismail', 8, 1, 50001953, false, false, '', ''),
-    new Student('5', 'Hamad', 8, 1, 50001953, false, false, '', ''),
-    new Student('6', 'Adel', 8, 1, 50001953, false, false, '', ''),
+    new Student('1', 'Mahmoud Yhya', 7, 1, '66548110', false, true, 'Nothing'),
+    new Student('2', 'Mido', 7, 1, '66548110', false, false, ''),
+    new Student('3', 'Ahmed', 7, 1, '66548110', true, false, 'خارج البلاد'),
+    new Student('4', 'Ismail', 8, 1, '50001953', false, false, ''),
+    new Student('5', 'Hamad', 8, 1, '50001953', false, false, ''),
+    new Student('6', 'Adel', 8, 1, '50001953', false, false, ''),
   ];
 
   grades: Grade[] = [
@@ -34,14 +38,31 @@ export class StudentsService {
     new Class('2', 8, 1, 'Class 1'),
   ];
 
+  status: Status[] = [];
+
   getAllStudents() {
     return this.students;
   }
 
+  addStudent(student: Student) {
+    this.students.push(student);
+    this.studentsUpdated.next(true);
+  }
+
   getStudentsByGradeAndClass(gradeNum: number, classNum: number) {
-    return this.students.filter(
-      (stu) => stu.gradeNum === gradeNum && stu.classNum === classNum
+    // Check if there is status for same grade and class, if not return fresh students, if yes return status students
+    const date = new Date().toLocaleDateString();
+    const existStatus = this.status.find(
+      (st) =>
+        st.date === date && st.gradeNum === gradeNum && st.classNum === classNum
     );
+    if (existStatus) {
+      return existStatus.students;
+    } else {
+      return this.students.filter(
+        (stu) => stu.gradeNum === gradeNum && stu.classNum === classNum
+      );
+    }
   }
 
   getAllGrades() {
@@ -70,5 +91,25 @@ export class StudentsService {
   }
   setCurrentActiveClass(classNum: number) {
     this.currentActiveClass = classNum;
+  }
+
+  saveToStatus(currentStatus: Status) {
+    const existStatus = this.status.find(
+      (st) =>
+        st.date === currentStatus.date &&
+        st.gradeNum === currentStatus.gradeNum &&
+        st.classNum === currentStatus.classNum
+    );
+
+    if (existStatus) {
+      existStatus.students = currentStatus.students;
+    } else {
+      this.status.push(currentStatus);
+    }
+    console.log(this.status);
+  }
+
+  changeLateOrAbsentsStatus(status: boolean) {
+    this.lateOrAbsentsStatusChanged.next(status);
   }
 }

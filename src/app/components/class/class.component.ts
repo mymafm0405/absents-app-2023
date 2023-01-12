@@ -20,7 +20,6 @@ export class ClassComponent {
   }
 
   onClassClick() {
-    console.log('hello')
     this.stuServ.setCurrentActiveClass(this.currentClass.classNum);
     this.stuServ.changeClassActiveStatus(false);
   }

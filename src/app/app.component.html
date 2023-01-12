@@ -7,17 +7,28 @@
   <hr />
   <div class="row text-center">
     <div class="col-xs-6">
-      <button class="btn btn-danger btn-lg" (click)="onManage()">Manage</button>
+      <button
+        class="btn btn-danger btn-lg"
+        (click)="onManage()"
+        [disabled]="saving || insertSelected"
+      >
+        Manage
+      </button>
     </div>
     <div class="col-xs-6">
-      <button class="btn btn-success btn-lg" (click)="onInsert()">
+      <button
+        class="btn btn-success btn-lg"
+        (click)="onInsert()"
+        [disabled]="saving || manageSelected"
+      >
         Insert
       </button>
     </div>
   </div>
-  <app-grades-list *ngIf="showInsert"></app-grades-list>
+  <app-grades-list [menuName]="menu" *ngIf="insertSelected || manageSelected"></app-grades-list>
+  <!-- <app-students-manage-list *ngIf="showManageList"></app-students-manage-list> -->
   <app-students-absent-late-list
-    *ngIf="showAbsLateList"
+    [menuType]="menu"
+    *ngIf="showList"
   ></app-students-absent-late-list>
-  <app-students-manage-list *ngIf="showManage"></app-students-manage-list>
 </div>

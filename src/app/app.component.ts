@@ -7,25 +7,39 @@ import { StudentsService } from './shared/students.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  showManage = false;
-  showInsert = false;
-  showAbsLateList = false;
+  showList = false;
+  showManageList = false;
+  saving = false;
+  insertSelected = false;
+  manageSelected = false;
+  menu = '';
 
   constructor(public stuServ: StudentsService) {}
 
   ngOnInit() {
     this.stuServ.classActiveStatus.subscribe((status) => {
-      this.showAbsLateList = !status;
+      this.showList = !status;
+    });
+
+    this.stuServ.savingStatus.subscribe((status) => {
+      this.saving = status;
+    });
+
+    this.stuServ.gradeActiveStatus.subscribe((status) => {
+      if (status) {
+        this.insertSelected = false;
+        this.manageSelected = false;
+      }
     });
   }
 
   onManage() {
-    this.showManage = true;
-    this.showInsert = false;
+    this.manageSelected = true;
+    this.menu = 'manage';
   }
 
   onInsert() {
-    this.showManage = false;
-    this.showInsert = true;
+    this.insertSelected = true;
+    this.menu = 'insert';
   }
 }

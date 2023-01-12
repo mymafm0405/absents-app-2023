@@ -1,1 +1,81 @@
-<h4>{{ student.name }}</h4>
+<!-- Here the menu for insert -->
+<div
+  class="row"
+  *ngIf="menuType === 'insert'"
+  [ngClass]="{
+    red: absentStatus.length > 0 || student.absent,
+    green:
+      absentStatus.length === 0 &&
+      !lateStatus &&
+      !student.absent &&
+      !student.late,
+    orange: lateStatus || student.late
+  }"
+>
+  <div class="col-xs-3">
+    <button class="btn btn-default" (click)="togglePhone()">
+      <span *ngIf="!showPhone" class="glyphicon glyphicon-phone-alt"></span
+      ><span *ngIf="showPhone">Hide</span>
+    </button>
+    <h4 *ngIf="showPhone">{{ student.phone }}</h4>
+  </div>
+  <div class="col-xs-3">
+    <input
+      type="checkbox"
+      class="form-control"
+      name="late"
+      [(ngModel)]="lateStatus"
+      value="1"
+      (change)="onLateChange($event, student.id)"
+      [disabled]="lateDisabled || student.absent"
+    />
+    <input
+      *ngIf="lateStatus"
+      type="text"
+      class="form-control"
+      [(ngModel)]="lateReason"
+      [value]="student.reason"
+      placeholder="Reason..."
+    />
+    <button
+      class="btn btn-success"
+      (click)="onSaveReason()"
+      *ngIf="lateStatus"
+      [disabled]="lateReason === student.reason && lateReasonMatched"
+    >
+      <span class="glyphicon glyphicon-floppy-saved"></span
+      ><span
+        *ngIf="lateReason !== student.reason"
+        style="color: orange"
+        class="glyphicon glyphicon-warning-sign"
+      ></span>
+    </button>
+  </div>
+  <div class="col-xs-3">
+    <select
+      name="absent"
+      class="form-control"
+      [(ngModel)]="absentStatus"
+      (change)="onAbsentChange($event, student.id)"
+      [disabled]="absDisabled || student.late"
+    >
+      <option
+        *ngFor="let opt of absentsOptions"
+        [value]="opt"
+        [selected]="absentStatus == true"
+      >
+        {{ opt }}
+      </option>
+    </select>
+  </div>
+  <div class="col-xs-3">
+    {{ student.name }}
+  </div>
+</div>
+
+<!-- Here the menu for manage -->
+<div class="row" *ngIf="menuType === 'manage'">
+  <div class="col-xs-4">Delete</div>
+  <div class="col-xs-4">Edit</div>
+  <div class="col-xs-4">{{ student.name }}</div>
+</div>

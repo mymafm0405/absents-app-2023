@@ -4,10 +4,9 @@ export class Student {
     public name: string,
     public gradeNum: number,
     public classNum: number,
-    public phone: number,
+    public phone: string,
     public absent: boolean,
     public late: boolean,
     public reason: string,
-    public date: string
   ) {}
 }

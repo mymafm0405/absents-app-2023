@@ -10,11 +10,15 @@ import { StudentsService } from 'src/app/shared/students.service';
 export class ClassesListComponent {
   @Input() currentActiveGrade: number;
   classes: Class[] = [];
+  closeDisabled = false;
 
   constructor(public stuServ: StudentsService) {}
 
   ngOnInit() {
     this.classes = this.stuServ.getAllClassesForGrade(this.currentActiveGrade);
+    this.stuServ.classActiveStatus.subscribe(status => {
+      this.closeDisabled = !status;
+    })
   }
 
   onClose() {
