@@ -9,6 +9,8 @@ import { StudentsService } from 'src/app/shared/students.service';
 })
 export class StudentAbsentLateComponent {
   @Input() student: Student;
+  @Input() menuType: string;
+  
   @Output() absentChange = new EventEmitter<{
     id: string;
     absentValue: string;

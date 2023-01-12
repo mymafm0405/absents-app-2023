@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Status } from 'src/app/shared/status.model';
 import { Student } from 'src/app/shared/student.model';
 import { StudentsService } from 'src/app/shared/students.service';
@@ -9,6 +9,8 @@ import { StudentsService } from 'src/app/shared/students.service';
   styleUrls: ['./students-absent-late-list.component.css'],
 })
 export class StudentsAbsentLateListComponent {
+  @Input() menuType = '';
+  
   students: Student[] = [];
   constructor(public stuServ: StudentsService) {}
   currentActiveGrade: number;

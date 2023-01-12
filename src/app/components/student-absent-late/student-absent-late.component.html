@@ -1,5 +1,7 @@
+<!-- Here the menu for insert -->
 <div
   class="row"
+  *ngIf="menuType === 'insert'"
   [ngClass]="{
     red: absentStatus.length > 0 || student.absent,
     green:
@@ -69,4 +71,11 @@
   <div class="col-xs-3">
     {{ student.name }}
   </div>
+</div>
+
+<!-- Here the menu for manage -->
+<div class="row" *ngIf="menuType === 'manage'">
+  <div class="col-xs-4">Delete</div>
+  <div class="col-xs-4">Edit</div>
+  <div class="col-xs-4">{{ student.name }}</div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Grade } from 'src/app/shared/grade.model';
 import { StudentsService } from 'src/app/shared/students.service';
 
@@ -11,6 +11,7 @@ export class GradesListComponent {
   grades: Grade[] = [];
   showClassesList = false;
   currentActiveGrade: number;
+  @Input() menuName = '';
 
   constructor(public stuServ: StudentsService) {}
 

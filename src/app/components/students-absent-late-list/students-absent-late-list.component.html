@@ -17,16 +17,28 @@
     </button>
   </div>
 </div>
-<div class="row">
+<h4 *ngIf="menuType === 'manage'">Manage menu</h4>
+<h4 *ngIf="menuType === 'insert'">Insert menu</h4>
+
+<!-- Here is the insert menu for students -->
+<div class="row" *ngIf="menuType === 'insert'">
   <div class="col-xs-3">Phone</div>
   <div class="col-xs-3">Late</div>
   <div class="col-xs-3">Absent</div>
   <div class="col-xs-3">Name</div>
 </div>
+
+<!-- Here is the manage menu for students -->
+<div class="row" *ngIf="menuType === 'manage'">
+  <div class="col-xs-8">Actions</div>
+  <div class="col-xs-4">Name</div>
+</div>
+
 <div *ngIf="students.length > 0">
   <app-student-absent-late
     *ngFor="let student of students"
     [student]="student"
+    [menuType]="menuType"
     (absentChange)="changeStudentAbsentData($event)"
     (lateChange)="changeStudentLateData($event)"
   ></app-student-absent-late>
