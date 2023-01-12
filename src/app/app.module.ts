@@ -14,6 +14,7 @@ import { GradesListComponent } from './components/grades-list/grades-list.compon
 import { ClassesListComponent } from './components/classes-list/classes-list.component';
 import { LoadingComponent } from './utilities/loading/loading.component';
 import { FormsModule } from '@angular/forms';
+import { AddStudentsComponent } from './components/add-students/add-students.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     GradesListComponent,
     ClassesListComponent,
     LoadingComponent,
+    AddStudentsComponent,
   ],
   imports: [
     BrowserModule,
