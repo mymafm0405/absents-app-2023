@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StudentsService } from './shared/students.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,15 @@ import { Component } from '@angular/core';
 export class AppComponent {
   showManage = false;
   showInsert = false;
+  showAbsLateList = false;
+
+  constructor(public stuServ: StudentsService) {}
+
+  ngOnInit() {
+    this.stuServ.classActiveStatus.subscribe((status) => {
+      this.showAbsLateList = !status;
+    });
+  }
 
   onManage() {
     this.showManage = true;
