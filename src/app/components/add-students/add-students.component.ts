@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Student } from 'src/app/shared/student.model';
 import { StudentsService } from 'src/app/shared/students.service';
 import * as XLSX from 'xlsx';
+import { Md5 } from 'ts-md5';
 
 @Component({
   selector: 'app-add-students',
@@ -21,15 +22,17 @@ export class AddStudentsComponent {
   constructor(public studServ: StudentsService) {}
 
   onAddStudent() {
+    // console.log(Md5.hashStr(this.studentName));
     const newStudent = new Student(
-      '112',
+      Md5.hashStr(this.studentName),
       this.studentName,
       this.grade,
       this.class,
       this.studentPhone,
       false,
       false,
-      ''
+      '',
+      true
     );
 
     this.studServ.addStudent(newStudent);
@@ -56,17 +59,19 @@ export class AddStudentsComponent {
         this.data = XLSX.utils.sheet_to_json(workSheet, { header: 1 });
         // console.log(this.data);
 
-        for (const row of this.data.slice(1)) {
+        for (const row of this.data.slice(2)) {
           if (row.length === 3) {
             const newStudent = new Student(
-              row[0],
+              // This is a hash of student name to make sure the id is not duplicated
+              Md5.hashStr(row[1]),
               row[1],
               this.grade,
               this.class,
               row[2],
               false,
               false,
-              ''
+              '',
+              true
             );
             this.newStudents.push(newStudent);
           }

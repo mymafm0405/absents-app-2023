@@ -19,12 +19,32 @@ export class StudentsService {
   currentActiveClass: number;
 
   students: Student[] = [
-    new Student('1', 'Mahmoud Yhya', 7, 1, '66548110', false, true, 'Nothing'),
-    new Student('2', 'Mido', 7, 1, '66548110', false, false, ''),
-    new Student('3', 'Ahmed', 7, 1, '66548110', true, false, 'خارج البلاد'),
-    new Student('4', 'Ismail', 8, 1, '50001953', false, false, ''),
-    new Student('5', 'Hamad', 8, 1, '50001953', false, false, ''),
-    new Student('6', 'Adel', 8, 1, '50001953', false, false, ''),
+    new Student(
+      '1',
+      'Mahmoud Yhya',
+      7,
+      1,
+      '66548110',
+      false,
+      true,
+      'Nothing',
+      true
+    ),
+    new Student('2', 'Mido', 7, 1, '66548110', false, false, '', true),
+    new Student(
+      '3',
+      'Ahmed',
+      7,
+      1,
+      '66548110',
+      true,
+      false,
+      'خارج البلاد',
+      true
+    ),
+    new Student('4', 'Ismail', 8, 1, '50001953', false, false, '', true),
+    new Student('5', 'Hamad', 8, 1, '50001953', false, false, '', true),
+    new Student('6', 'Adel', 8, 1, '50001953', false, false, '', true),
   ];
 
   grades: Grade[] = [
@@ -48,6 +68,15 @@ export class StudentsService {
     this.students.push(student);
     this.studentsUpdated.next(true);
   }
+  
+  deleteStudent(student: Student) {
+    const existStudent = this.students.find(stu => stu === student);
+    if (existStudent) {
+      console.log(existStudent);
+      existStudent.active = false;
+      this.studentsUpdated.next(true);
+    }
+  }
 
   updateAllStudentsForGradeAndClass(
     gradeNum: number,
@@ -57,15 +86,22 @@ export class StudentsService {
     if (newStudents.length > 0) {
       console.log(gradeNum, classNum);
       console.log(this.students);
-      this.students = this.students.filter((stud) => {
-        if (stud.gradeNum === gradeNum && stud.classNum === classNum) {
-          return false;
-        } else {
-          return true;
+      // Keep old students but set them inactive
+      this.students.forEach(stu => {
+        if (stu.gradeNum === gradeNum && stu.classNum === classNum) {
+          stu.active = false;
         }
       });
-      console.log(this.students);
+      // this.students = this.students.filter((stud) => {
+      //   if (stud.gradeNum === gradeNum && stud.classNum === classNum) {
+      //     stud.active = false;
+      //     return false;
+      //   } else {
+      //     return true;
+      //   }
+      // });
       this.students = this.students.concat(newStudents);
+      console.log(this.students);
       // console.log(this.students);
       this.studentsUpdated.next(true);
     }
@@ -81,9 +117,17 @@ export class StudentsService {
     if (existStatus) {
       return existStatus.students;
     } else {
-      return this.students.filter(
-        (stu) => stu.gradeNum === gradeNum && stu.classNum === classNum
-      );
+      return this.students.filter((stu) => {
+        if (
+          stu.gradeNum === gradeNum &&
+          stu.classNum === classNum &&
+          stu.active === true
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
     }
   }
 

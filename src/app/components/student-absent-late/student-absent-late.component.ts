@@ -10,7 +10,7 @@ import { StudentsService } from 'src/app/shared/students.service';
 export class StudentAbsentLateComponent {
   @Input() student: Student;
   @Input() menuType: string;
-  
+
   @Output() absentChange = new EventEmitter<{
     id: string;
     absentValue: string;
@@ -54,7 +54,6 @@ export class StudentAbsentLateComponent {
     if (this.student.absent) {
       this.absentStatus = this.student.reason;
     }
-    console.log(this.student);
   }
 
   onAbsentChange(event: any, stuId: string) {
@@ -86,7 +85,7 @@ export class StudentAbsentLateComponent {
     });
   }
   onSaveReason() {
-    this.studServ.changeLateOrAbsentsStatus(true)
+    this.studServ.changeLateOrAbsentsStatus(true);
     this.lateReasonMatched = true;
     this.lateChange.emit({
       id: this.student.id,
@@ -98,5 +97,9 @@ export class StudentAbsentLateComponent {
 
   togglePhone() {
     this.showPhone = !this.showPhone;
+  }
+
+  onDelete() {
+    this.studServ.deleteStudent(this.student);
   }
 }

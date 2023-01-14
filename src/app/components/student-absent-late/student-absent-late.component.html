@@ -75,7 +75,8 @@
 
 <!-- Here the menu for manage -->
 <div class="row" *ngIf="menuType === 'manage'">
-  <div class="col-xs-4">Delete</div>
-  <div class="col-xs-4">Edit</div>
-  <div class="col-xs-4">{{ student.name }}</div>
+  <div class="col-xs-3"><button class="btn btn-danger" (click)="onDelete()"><span class="glyphicon glyphicon-remove"></span></button></div>
+  <div class="col-xs-3"><button class="btn btn-default" disabled><span class="glyphicon glyphicon-pencil"></span></button></div>
+  <div class="col-xs-3"><button class="btn btn-default" disabled><span class="glyphicon glyphicon-list-alt"></span></button></div>
+  <div class="col-xs-3">{{ student.name }}</div>
 </div>

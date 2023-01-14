@@ -8,5 +8,6 @@ export class Student {
     public absent: boolean,
     public late: boolean,
     public reason: string,
+    public active: boolean,
   ) {}
 }
