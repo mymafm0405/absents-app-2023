@@ -48,11 +48,25 @@ export class StudentsService {
     this.students.push(student);
     this.studentsUpdated.next(true);
   }
-  
-  updateAllStudentsForGradeAndClass(gradeNum: number, classNum: number, newStudents: Student[]) {
+
+  updateAllStudentsForGradeAndClass(
+    gradeNum: number,
+    classNum: number,
+    newStudents: Student[]
+  ) {
     if (newStudents.length > 0) {
-      this.students = this.students.filter(stud => stud.gradeNum !== gradeNum && stud.classNum !== classNum);
+      console.log(gradeNum, classNum);
+      console.log(this.students);
+      this.students = this.students.filter((stud) => {
+        if (stud.gradeNum === gradeNum && stud.classNum === classNum) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      console.log(this.students);
       this.students = this.students.concat(newStudents);
+      // console.log(this.students);
       this.studentsUpdated.next(true);
     }
   }
