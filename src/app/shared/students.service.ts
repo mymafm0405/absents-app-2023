@@ -48,6 +48,14 @@ export class StudentsService {
     this.students.push(student);
     this.studentsUpdated.next(true);
   }
+  
+  updateAllStudentsForGradeAndClass(gradeNum: number, classNum: number, newStudents: Student[]) {
+    if (newStudents.length > 0) {
+      this.students = this.students.filter(stud => stud.gradeNum !== gradeNum && stud.classNum !== classNum);
+      this.students = this.students.concat(newStudents);
+      this.studentsUpdated.next(true);
+    }
+  }
 
   getStudentsByGradeAndClass(gradeNum: number, classNum: number) {
     // Check if there is status for same grade and class, if not return fresh students, if yes return status students

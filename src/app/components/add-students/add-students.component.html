@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-xs-4">
-    <input type="file" class="form-control" />
-    <button class="btn btn-info">Load & Replace</button>
+    <input type="file" class="form-control" (change)="onFileChange($event)" />
+    <button class="btn btn-info" [disabled]="!loadButton" (click)="onLoadAndReplace()">Load & Replace</button>
   </div>
   <div class="col-xs-8">
     <input type="text" class="form-control" placeholder="Student name" [(ngModel)]="studentName" />
