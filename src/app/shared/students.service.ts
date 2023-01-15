@@ -56,6 +56,8 @@ export class StudentsService {
   classes: Class[] = [
     new Class('1', 7, 1, 'Class 1'),
     new Class('2', 8, 1, 'Class 1'),
+    new Class('3', 9, 1, 'Class 1'),
+    new Class('4', 9, 2, 'Class 2'),
   ];
 
   status: Status[] = [];
@@ -64,13 +66,40 @@ export class StudentsService {
     return this.students;
   }
 
+  getAllAbsentsByDate(date: string) {
+    const foundStudents: Student[] = [];
+    this.status.forEach((sta) => {
+      if (sta.date === date) {
+        sta.students.forEach((stud) => {
+          if (stud.absent) {
+            foundStudents.push(stud);
+          }
+        });
+      }
+    });
+    return foundStudents;
+  }
+  getAllLateByDate(date: string) {
+    const foundStudents: Student[] = [];
+    this.status.forEach((sta) => {
+      if (sta.date === date) {
+        sta.students.forEach((stud) => {
+          if (stud.late) {
+            foundStudents.push(stud);
+          }
+        });
+      }
+    });
+    return foundStudents;
+  }
+
   addStudent(student: Student) {
     this.students.push(student);
     this.studentsUpdated.next(true);
   }
-  
+
   deleteStudent(student: Student) {
-    const existStudent = this.students.find(stu => stu === student);
+    const existStudent = this.students.find((stu) => stu === student);
     if (existStudent) {
       console.log(existStudent);
       existStudent.active = false;
@@ -87,7 +116,7 @@ export class StudentsService {
       console.log(gradeNum, classNum);
       console.log(this.students);
       // Keep old students but set them inactive
-      this.students.forEach(stu => {
+      this.students.forEach((stu) => {
         if (stu.gradeNum === gradeNum && stu.classNum === classNum) {
           stu.active = false;
         }

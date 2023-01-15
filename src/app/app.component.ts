@@ -12,6 +12,7 @@ export class AppComponent {
   saving = false;
   insertSelected = false;
   manageSelected = false;
+  reportSelected = false;
   menu = '';
 
   constructor(public stuServ: StudentsService) {}
@@ -32,14 +33,23 @@ export class AppComponent {
       }
     });
   }
-
+  
   onManage() {
     this.manageSelected = true;
+    this.reportSelected = false;
     this.menu = 'manage';
   }
-
+  
   onInsert() {
     this.insertSelected = true;
+    this.reportSelected = false;
     this.menu = 'insert';
+  }
+  
+  onReport() {
+    this.reportSelected = true;
+    this.insertSelected = false;
+    this.manageSelected = false;
+    this.showList = false;
   }
 }

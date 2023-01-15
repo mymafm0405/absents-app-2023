@@ -6,7 +6,7 @@
   </div>
   <hr />
   <div class="row text-center">
-    <div class="col-xs-6">
+    <div class="col-xs-4">
       <button
         class="btn btn-danger btn-lg"
         (click)="onManage()"
@@ -15,7 +15,15 @@
         Manage
       </button>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-4">
+      <button
+        class="btn btn-warning btn-lg"
+        (click)="onReport()"
+      >
+        Reports
+      </button>
+    </div>
+    <div class="col-xs-4">
       <button
         class="btn btn-success btn-lg"
         (click)="onInsert()"
@@ -31,4 +39,5 @@
     [menuType]="menu"
     *ngIf="showList"
   ></app-students-absent-late-list>
+  <app-students-report-list *ngIf="reportSelected"></app-students-report-list>
 </div>

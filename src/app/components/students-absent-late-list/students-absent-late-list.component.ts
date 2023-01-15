@@ -99,7 +99,7 @@ export class StudentsAbsentLateListComponent {
         this.currentActiveClass
       ).toString();
 
-      const date = new Date().toLocaleDateString();
+      const date = new Date().toISOString().split('T')[0];
 
       const currentStatus = new Status(
         id,

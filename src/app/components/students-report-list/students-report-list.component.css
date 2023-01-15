@@ -1,0 +1,11 @@
+.my-table {
+    margin-top: 30px;
+    background-color: white;
+}
+table {
+    margin-top: 20px;
+    text-align: center;
+}
+th {
+    text-align: center;
+}
