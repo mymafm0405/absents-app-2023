@@ -17,19 +17,24 @@ export class StudentsAbsentLateListComponent {
   currentActiveClass: number;
   saving = false;
   dataChanged = false;
+  currentDate = '';
 
   ngOnInit() {
+    this.currentDate = new Date().toISOString().split('T')[0];
+
     this.currentActiveGrade = this.stuServ.currentActiveGrade;
     this.currentActiveClass = this.stuServ.currentActiveClass;
 
-    this.students = this.stuServ.getStudentsByGradeAndClass(
+    this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
+      this.currentDate,
       this.stuServ.currentActiveGrade,
       this.stuServ.currentActiveClass
     );
 
     this.stuServ.studentsUpdated.subscribe((status) => {
       if (status) {
-        this.students = this.stuServ.getStudentsByGradeAndClass(
+        this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
+          this.currentDate,
           this.stuServ.currentActiveGrade,
           this.stuServ.currentActiveClass
         );
@@ -44,6 +49,15 @@ export class StudentsAbsentLateListComponent {
     this.stuServ.lateOrAbsentsStatusChanged.subscribe((status) => {
       this.dataChanged = status;
     });
+  }
+
+  onDateChange(event: any) {
+    this.currentDate = event.target.value;
+    this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
+      this.currentDate,
+      this.stuServ.currentActiveGrade,
+      this.stuServ.currentActiveClass
+    );
   }
 
   onCloseClass() {
@@ -99,11 +113,12 @@ export class StudentsAbsentLateListComponent {
         this.currentActiveClass
       ).toString();
 
-      const date = new Date().toISOString().split('T')[0];
+      // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
+      // const date = new Date().toISOString().split('T')[0];
 
       const currentStatus = new Status(
         id,
-        date,
+        this.currentDate,
         this.currentActiveGrade,
         this.currentActiveClass,
         this.students

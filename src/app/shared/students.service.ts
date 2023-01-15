@@ -121,14 +121,6 @@ export class StudentsService {
           stu.active = false;
         }
       });
-      // this.students = this.students.filter((stud) => {
-      //   if (stud.gradeNum === gradeNum && stud.classNum === classNum) {
-      //     stud.active = false;
-      //     return false;
-      //   } else {
-      //     return true;
-      //   }
-      // });
       this.students = this.students.concat(newStudents);
       console.log(this.students);
       // console.log(this.students);
@@ -136,16 +128,20 @@ export class StudentsService {
     }
   }
 
-  getStudentsByGradeAndClass(gradeNum: number, classNum: number) {
+  getStudentsByGradeAndClassAndDate(date: string, gradeNum: number, classNum: number) {
     // Check if there is status for same grade and class, if not return fresh students, if yes return status students
-    const date = new Date().toLocaleDateString();
+
+    // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
+  
     const existStatus = this.status.find(
       (st) =>
         st.date === date && st.gradeNum === gradeNum && st.classNum === classNum
     );
     if (existStatus) {
+      console.log('found status')
       return existStatus.students;
     } else {
+      console.log('not found status')
       return this.students.filter((stu) => {
         if (
           stu.gradeNum === gradeNum &&
@@ -159,6 +155,20 @@ export class StudentsService {
       });
     }
   }
+
+  // getStatusByDateAndGradeAndClass(
+  //   date: string,
+  //   gradeNum: number,
+  //   classNum: number
+  // ) {
+  //   const foundStatus = this.status.find((stat) => {
+  //     stat.date === date &&
+  //       stat.gradeNum === gradeNum &&
+  //       stat.classNum === classNum;
+  //   });
+
+  //   if()
+  // }
 
   getAllGrades() {
     return this.grades;

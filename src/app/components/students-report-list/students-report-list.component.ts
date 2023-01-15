@@ -14,9 +14,7 @@ export class StudentsReportListComponent {
 
   constructor(public studServ: StudentsService) {}
 
-  onDateChange(event: any) {
-    console.log(event);
-    console.log(this.selectedDate);
+  onDateChange() {
 
     // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
     const date = new Date().toISOString().split('T')[0];
