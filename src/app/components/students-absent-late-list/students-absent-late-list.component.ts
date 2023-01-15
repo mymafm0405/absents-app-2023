@@ -38,6 +38,8 @@ export class StudentsAbsentLateListComponent {
           this.stuServ.currentActiveGrade,
           this.stuServ.currentActiveClass
         );
+        console.log(this.students);
+        console.log(this.currentDate);
         this.dataChanged = true;
       }
     });
@@ -53,11 +55,13 @@ export class StudentsAbsentLateListComponent {
 
   onDateChange(event: any) {
     this.currentDate = event.target.value;
-    this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
-      this.currentDate,
-      this.stuServ.currentActiveGrade,
-      this.stuServ.currentActiveClass
-    );
+    console.log(this.currentDate);
+    this.stuServ.studentsUpdated.next(true);
+    // this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
+    //   this.currentDate,
+    //   this.stuServ.currentActiveGrade,
+    //   this.stuServ.currentActiveClass
+    // );
   }
 
   onCloseClass() {
@@ -67,12 +71,15 @@ export class StudentsAbsentLateListComponent {
   changeStudentAbsentData(stuData: { id: string; absentValue: string }) {
     const existStudent = this.students.find((stu) => stu.id === stuData.id);
     if (existStudent) {
+      console.log(stuData.absentValue.length);
       if (stuData.absentValue.length > 0) {
         existStudent.absent = true;
         existStudent.reason = stuData.absentValue;
       } else {
         existStudent.absent = false;
+        existStudent.reason = '';
       }
+      console.log(existStudent);
     }
   }
 

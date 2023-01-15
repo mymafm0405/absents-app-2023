@@ -128,20 +128,24 @@ export class StudentsService {
     }
   }
 
-  getStudentsByGradeAndClassAndDate(date: string, gradeNum: number, classNum: number) {
+  getStudentsByGradeAndClassAndDate(
+    date: string,
+    gradeNum: number,
+    classNum: number
+  ) {
     // Check if there is status for same grade and class, if not return fresh students, if yes return status students
 
     // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
-  
+
     const existStatus = this.status.find(
       (st) =>
         st.date === date && st.gradeNum === gradeNum && st.classNum === classNum
     );
     if (existStatus) {
-      console.log('found status')
+      console.log('found status');
       return existStatus.students;
     } else {
-      console.log('not found status')
+      console.log('not found status');
       return this.students.filter((stu) => {
         if (
           stu.gradeNum === gradeNum &&
@@ -154,6 +158,7 @@ export class StudentsService {
         }
       });
     }
+    
   }
 
   // getStatusByDateAndGradeAndClass(
@@ -199,19 +204,24 @@ export class StudentsService {
   }
 
   saveToStatus(currentStatus: Status) {
+    console.log(currentStatus);
     const existStatus = this.status.find(
-      (st) =>
-        st.date === currentStatus.date &&
-        st.gradeNum === currentStatus.gradeNum &&
-        st.classNum === currentStatus.classNum
+      (st) => {
+        if (st.date === currentStatus.date && st.gradeNum === currentStatus.gradeNum && st.classNum === currentStatus.classNum) {
+          return true;
+        }
+      }
     );
 
     if (existStatus) {
+      console.log(existStatus.date, ' Found');
       existStatus.students = currentStatus.students;
     } else {
+      console.log(currentStatus.date, ' not found');
+      console.log(currentStatus.students, ' not found');
       this.status.push(currentStatus);
+      console.log(this.status);
     }
-    console.log(this.status);
   }
 
   changeLateOrAbsentsStatus(status: boolean) {
