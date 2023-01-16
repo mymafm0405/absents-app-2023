@@ -290,7 +290,57 @@ export class StudentsService {
 
       if (statDateTime >= dateFromTime && statDateTime <= dateToTime) {
         stat.students.forEach((student) => {
-          if (student.absent && student.reason === 'غائب') {
+          if (dateFromTime === dateToTime) {
+            if (student.absent) {
+              const existStudent = foundStudents.find(
+                (stu) => stu.student.id === student.id
+              );
+              if (existStudent) {
+                console.log('found duplicate student');
+                existStudent.counter = existStudent.counter + 1;
+                console.log(existStudent);
+              } else {
+                console.log('not found');
+                foundStudents.push({ student, counter: counter + 1 });
+              }
+            }
+          } else {
+            if (student.absent && student.reason === 'غائب') {
+              const existStudent = foundStudents.find(
+                (stu) => stu.student.id === student.id
+              );
+              if (existStudent) {
+                console.log('found duplicate student');
+                existStudent.counter = existStudent.counter + 1;
+                console.log(existStudent);
+              } else {
+                console.log('not found');
+                foundStudents.push({ student, counter: counter + 1 });
+              }
+            }
+          }
+        });
+      }
+    });
+    console.log(foundStudents);
+
+    return foundStudents;
+  }
+
+  getLateStudentsFromToDate(dateFromTime: number, dateToTime: number) {
+    const foundStudents: { student: Student; counter: number }[] = [];
+
+    console.log(dateFromTime);
+    console.log(dateToTime);
+
+    this.status.forEach((stat) => {
+      let counter = 0;
+      const statDateTime = new Date(stat.date).getTime();
+      console.log(statDateTime);
+
+      if (statDateTime >= dateFromTime && statDateTime <= dateToTime) {
+        stat.students.forEach((student) => {
+          if (student.late) {
             const existStudent = foundStudents.find(
               (stu) => stu.student.id === student.id
             );
@@ -299,7 +349,7 @@ export class StudentsService {
               existStudent.counter = existStudent.counter + 1;
               console.log(existStudent);
             } else {
-              console.log('not found')
+              console.log('not found');
               foundStudents.push({ student, counter: counter + 1 });
             }
           }

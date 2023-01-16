@@ -14,7 +14,7 @@ export class StudentsReportListComponent {
   dateToTime: number;
   selectedDateTo = '';
   foundStudents: Student[] = [];
-  myReturnedStudents: {student: Student, counter: number}[] = []
+  myReturnedStudents: { student: Student; counter: number }[] = [];
   optionClicked = false;
 
   constructor(public studServ: StudentsService) {}
@@ -38,7 +38,12 @@ export class StudentsReportListComponent {
 
   onLate() {
     this.optionClicked = true;
-    this.foundStudents = this.studServ.getAllLateByDate(this.selectedDate);
+    // this.foundStudents = this.studServ.getAllLateByDate(this.selectedDate);
+
+    this.myReturnedStudents = this.studServ.getLateStudentsFromToDate(
+      this.dateFromTime,
+      this.dateToTime
+    );
   }
 
   onAbsents() {

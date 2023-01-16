@@ -48,7 +48,7 @@
     <button
       class="btn btn-warning"
       (click)="onLate()"
-      [disabled]="selectedDate.trim().length === 0"
+      [disabled]="selectedDateFrom.trim().length === 0 || selectedDateTo.trim().length === 0"
     >
       Late
     </button>
@@ -57,7 +57,7 @@
     <button
       class="btn btn-danger"
       (click)="onAbsents()"
-      [disabled]="selectedDateFrom.trim().length === 0"
+      [disabled]="selectedDateFrom.trim().length === 0 || selectedDateTo.trim().length === 0"
     >
       Absents
     </button>
