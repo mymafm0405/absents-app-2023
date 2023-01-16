@@ -10,18 +10,24 @@ import { StudentsService } from 'src/app/shared/students.service';
 export class StudentsReportListComponent {
   selectedDate = '';
   selectedDateFrom = '';
+  dateFromTime: number;
+  dateToTime: number;
   selectedDateTo = '';
   foundStudents: Student[] = [];
+  myReturnedStudents: {student: Student, counter: number}[] = []
   optionClicked = false;
 
   constructor(public studServ: StudentsService) {}
 
   onDateFromChange() {
-    const dateFrom = new Date(this.selectedDateFrom);
-    console.log(dateFrom);
+    this.dateFromTime = new Date(this.selectedDateFrom).getTime();
+    console.log(this.dateFromTime);
   }
 
-  onDateToChange() {}
+  onDateToChange() {
+    this.dateToTime = new Date(this.selectedDateTo).getTime();
+    console.log(this.dateToTime);
+  }
 
   onDateChange() {
     // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
@@ -37,6 +43,10 @@ export class StudentsReportListComponent {
 
   onAbsents() {
     this.optionClicked = true;
-    this.foundStudents = this.studServ.getAllAbsentsByDate(this.selectedDate);
+    // this.foundStudents = this.studServ.getAllAbsentsByDate(this.selectedDate);
+    this.myReturnedStudents = this.studServ.getAbsentsStudentsFromToDate(
+      this.dateFromTime,
+      this.dateToTime
+    );
   }
 }

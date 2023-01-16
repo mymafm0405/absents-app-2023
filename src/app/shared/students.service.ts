@@ -171,7 +171,7 @@ export class StudentsService {
       return existStatus.students;
     } else {
       console.log('not found status');
-      const newCopyOfStudents: Student[] = LODASH.cloneDeep(this.students)
+      const newCopyOfStudents: Student[] = LODASH.cloneDeep(this.students);
       const freshStudent: Student[] = newCopyOfStudents.filter((stu) => {
         if (
           stu.gradeNum === gradeNum &&
@@ -275,5 +275,39 @@ export class StudentsService {
 
   changeLateOrAbsentsStatus(status: boolean) {
     this.lateOrAbsentsStatusChanged.next(status);
+  }
+
+  getAbsentsStudentsFromToDate(dateFromTime: number, dateToTime: number) {
+    const foundStudents: { student: Student; counter: number }[] = [];
+
+    console.log(dateFromTime);
+    console.log(dateToTime);
+
+    this.status.forEach((stat) => {
+      let counter = 0;
+      const statDateTime = new Date(stat.date).getTime();
+      console.log(statDateTime);
+
+      if (statDateTime >= dateFromTime && statDateTime <= dateToTime) {
+        stat.students.forEach((student) => {
+          if (student.absent && student.reason === 'غائب') {
+            const existStudent = foundStudents.find(
+              (stu) => stu.student.id === student.id
+            );
+            if (existStudent) {
+              console.log('found duplicate student');
+              existStudent.counter = existStudent.counter + 1;
+              console.log(existStudent);
+            } else {
+              console.log('not found')
+              foundStudents.push({ student, counter: counter + 1 });
+            }
+          }
+        });
+      }
+    });
+    console.log(foundStudents);
+
+    return foundStudents;
   }
 }
