@@ -18,8 +18,13 @@ export class StudentsAbsentLateListComponent {
   saving = false;
   dataChanged = false;
   currentDate = '';
+  testArrayCopy: { id: string; absent: boolean }[] = [];
 
   ngOnInit() {
+    this.testArrayCopy = this.stuServ.getTestArray();
+    console.log('Test array copy');
+    console.log(this.testArrayCopy);
+
     this.currentDate = new Date().toISOString().split('T')[0];
 
     this.currentActiveGrade = this.stuServ.currentActiveGrade;
@@ -38,6 +43,7 @@ export class StudentsAbsentLateListComponent {
           this.stuServ.currentActiveGrade,
           this.stuServ.currentActiveClass
         );
+        console.log('After I change the date');
         console.log(this.students);
         console.log(this.currentDate);
         this.dataChanged = true;
@@ -69,7 +75,9 @@ export class StudentsAbsentLateListComponent {
   }
 
   changeStudentAbsentData(stuData: { id: string; absentValue: string }) {
-    const existStudent = this.students.find((stu) => stu.id === stuData.id);
+    const existStudent = this.students
+      .slice()
+      .find((stu) => stu.id === stuData.id);
     if (existStudent) {
       console.log(stuData.absentValue.length);
       if (stuData.absentValue.length > 0) {
@@ -81,6 +89,9 @@ export class StudentsAbsentLateListComponent {
       }
       console.log(existStudent);
     }
+    this.testArrayCopy[0].absent = true;
+    console.log('After change test array')
+    console.log(this.testArrayCopy)
   }
 
   changeStudentLateData(stuData: {
@@ -114,17 +125,12 @@ export class StudentsAbsentLateListComponent {
       this.stuServ.changeLateOrAbsentsStatus(false);
 
       // Saving to status
-      const id = (
-        Math.random() +
-        this.currentActiveGrade +
-        this.currentActiveClass
-      ).toString();
 
       // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
       // const date = new Date().toISOString().split('T')[0];
 
       const currentStatus = new Status(
-        id,
+        '',
         this.currentDate,
         this.currentActiveGrade,
         this.currentActiveClass,

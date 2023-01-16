@@ -5,6 +5,8 @@ import { Grade } from './grade.model';
 import { Status } from './status.model';
 import { Student } from './student.model';
 
+import * as LODASH from 'lodash';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -18,7 +20,20 @@ export class StudentsService {
   currentActiveGrade: number;
   currentActiveClass: number;
 
-  students: Student[] = [
+  testArray: { id: string; absent: boolean }[] = [
+    {
+      id: '1',
+      absent: false,
+    },
+  ];
+
+  getTestArray() {
+    // const testcopy = [...this.testArray];
+    const testcopy = LODASH.cloneDeep(this.testArray);
+    return testcopy;
+  }
+
+  private students: Student[] = [
     new Student(
       '1',
       'Mahmoud Yhya',
@@ -63,7 +78,7 @@ export class StudentsService {
   status: Status[] = [];
 
   getAllStudents() {
-    return this.students;
+    return LODASH.cloneDeep(this.students);
   }
 
   getAllAbsentsByDate(date: string) {
@@ -137,16 +152,27 @@ export class StudentsService {
 
     // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
 
-    const existStatus = this.status.find(
-      (st) =>
-        st.date === date && st.gradeNum === gradeNum && st.classNum === classNum
+    const existStatus = this.status.slice().find(
+      (st) => {
+        if (st.date === date) {
+          if (st.gradeNum === gradeNum && st.classNum === classNum) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      }
+      // st.date === date && st.gradeNum === gradeNum && st.classNum === classNum
     );
     if (existStatus) {
       console.log('found status');
       return existStatus.students;
     } else {
       console.log('not found status');
-      return this.students.filter((stu) => {
+      const newCopyOfStudents: Student[] = LODASH.cloneDeep(this.students)
+      const freshStudent: Student[] = newCopyOfStudents.filter((stu) => {
         if (
           stu.gradeNum === gradeNum &&
           stu.classNum === classNum &&
@@ -157,8 +183,12 @@ export class StudentsService {
           return false;
         }
       });
+      console.log('Freshhh students');
+      console.log(freshStudent);
+      console.log('Test array');
+      console.log(this.testArray);
+      return freshStudent;
     }
-    
   }
 
   // getStatusByDateAndGradeAndClass(
@@ -205,23 +235,42 @@ export class StudentsService {
 
   saveToStatus(currentStatus: Status) {
     console.log(currentStatus);
-    const existStatus = this.status.find(
-      (st) => {
-        if (st.date === currentStatus.date && st.gradeNum === currentStatus.gradeNum && st.classNum === currentStatus.classNum) {
+    const existStatus = this.status.find((st) => {
+      if (st.date === currentStatus.date) {
+        if (
+          st.gradeNum === currentStatus.gradeNum &&
+          st.classNum === currentStatus.classNum
+        ) {
           return true;
+        } else {
+          return false;
         }
+      } else {
+        return false;
       }
-    );
+    });
 
     if (existStatus) {
       console.log(existStatus.date, ' Found');
       existStatus.students = currentStatus.students;
     } else {
+      const id = (
+        Math.random() +
+        this.currentActiveGrade +
+        this.currentActiveClass
+      ).toString();
+
+      currentStatus.id = id;
+
       console.log(currentStatus.date, ' not found');
       console.log(currentStatus.students, ' not found');
+
       this.status.push(currentStatus);
+
       console.log(this.status);
     }
+    console.log('Original students');
+    console.log(this.students);
   }
 
   changeLateOrAbsentsStatus(status: boolean) {
