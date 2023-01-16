@@ -1,4 +1,37 @@
 <div class="row text-center">
+  <div class="col-xs-12">
+    <h3>Reports</h3>
+  </div>
+</div>
+<div class="row text-center">
+  <div class="col-xs-6">
+    <div class="form-group">
+      <label for="from">From:</label>
+      <input
+        id="from"
+        type="date"
+        class="form-control"
+        placeholder=""
+        (change)="onDateFromChange()"
+        [(ngModel)]="selectedDateFrom"
+      />
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="form-group">
+      <label for="to">To:</label>
+      <input
+        id="to"
+        type="date"
+        class="form-control"
+        placeholder=""
+        (change)="onDateToChange()"
+        [(ngModel)]="selectedDateTo"
+      />
+    </div>
+  </div>
+</div>
+<div class="row text-center">
   <div class="col-xs-4 col-xs-push-4">
     <h3>Reports</h3>
     <input

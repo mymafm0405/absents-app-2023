@@ -9,13 +9,21 @@ import { StudentsService } from 'src/app/shared/students.service';
 })
 export class StudentsReportListComponent {
   selectedDate = '';
+  selectedDateFrom = '';
+  selectedDateTo = '';
   foundStudents: Student[] = [];
   optionClicked = false;
 
   constructor(public studServ: StudentsService) {}
 
-  onDateChange() {
+  onDateFromChange() {
+    const dateFrom = new Date(this.selectedDateFrom);
+    console.log(dateFrom);
+  }
 
+  onDateToChange() {}
+
+  onDateChange() {
     // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
     const date = new Date().toISOString().split('T')[0];
 

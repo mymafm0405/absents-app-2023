@@ -25,7 +25,7 @@ export class StudentAbsentLateComponent {
     'غائب',
     'معذور',
     'مفصول',
-    'متقطع',
+    'منقطع',
     'خارج البلاد',
     'عذر إداري',
   ];
