@@ -114,7 +114,7 @@ export class StudentsService {
   }
 
   deleteStudent(student: Student) {
-    const existStudent = this.students.find((stu) => stu === student);
+    const existStudent = this.students.find((stu) => stu.id === student.id);
     if (existStudent) {
       console.log(existStudent);
       existStudent.active = false;
