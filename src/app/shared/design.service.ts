@@ -6,4 +6,7 @@ import { Subject } from 'rxjs'
 })
 export class DesignService {
     menuChanged = new Subject<{type: string, name: string}>();
+    gradeChanged = new Subject<number>();
+    classChanged = new Subject<number>();
+    
 }

@@ -1,6 +1,5 @@
 <div class="row">
   <div class="col-xs-12" *ngIf="grades.length > 0">
-    <h4>You're in {{ menuName }} menu.</h4>
     <!-- loop through all grades -->
     <app-grade *ngFor="let grade of grades" [grade]="grade"></app-grade>
   </div>

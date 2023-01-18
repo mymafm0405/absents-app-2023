@@ -1,9 +1,9 @@
 <div class="row top-bar">
   <div class="col-xs-8">
-    <h3><span>شعبة ( 1 ) - صف ( 1 )</span></h3>
+    <h3 *ngIf="gradeNum"><span class="grade-class"><span *ngIf="gradeNum">شعبة ( {{ gradeNum }} )</span>  <span *ngIf="classNum"> - صف ( {{ classNum }} )</span></span></h3>
   </div>
   <div class="col-xs-4">
-    <button class="btn btn-danger" disabled>
+    <button class="btn btn-danger" (click)="onClose()" [disabled]="!gradeNum">
       <span class="glyphicon glyphicon-remove"></span>
       إغلاق
     </button>

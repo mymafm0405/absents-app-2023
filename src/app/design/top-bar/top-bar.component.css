@@ -18,7 +18,7 @@ h3 {
     padding: 9px;
     font-size: 30px;
 }
-h3 span {
+h3 .grade-class {
     padding: 5px 60px;
     border: 2px solid yellowgreen;
     border-radius: 7px;
