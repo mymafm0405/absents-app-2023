@@ -11,6 +11,7 @@ import { StudentsService } from 'src/app/shared/students.service';
 export class GradeComponent {
   @Input() grade: Grade;
   active = true;
+  faded = false;
 
   constructor(
     public stuServ: StudentsService,
@@ -20,7 +21,14 @@ export class GradeComponent {
   ngOnInit(): void {
     this.stuServ.gradeActiveStatus.subscribe((status) => {
       this.active = status;
+      this.faded = false;
     });
+
+    this.designServ.gradeChanged.subscribe((gradeNum) => {
+      if (gradeNum !== this.grade.gradeNum) {
+        this.faded = true;
+      }
+    })
   }
 
   onGradeClick() {

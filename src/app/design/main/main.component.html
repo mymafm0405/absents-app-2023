@@ -3,6 +3,7 @@
         <div class="current-comp">
             <h2>{{ menu.name }}</h2>
             <app-grades-list></app-grades-list>
+            <h3 *ngIf="!gradeNum && menu.type !== 'report'" class="select-grade">قم بإختيار الشعبة</h3>
         </div>
     </div>
 </div>

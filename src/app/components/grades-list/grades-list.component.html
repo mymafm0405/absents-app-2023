@@ -1,11 +1,13 @@
-<div class="row">
-  <div class="col-xs-12" *ngIf="grades.length > 0">
-    <!-- loop through all grades -->
-    <app-grade *ngFor="let grade of grades" [grade]="grade"></app-grade>
+<div class="row" *ngIf="grades.length > 0">
+  <!-- loop through all grades -->
+  <div class="col-xs-4" *ngFor="let grade of grades">
+    <app-grade [grade]="grade"></app-grade>
   </div>
 </div>
 <div class="row" *ngIf="showClassesList">
-    <div class="col-xs-12">
-        <app-classes-list [currentActiveGrade]="currentActiveGrade"></app-classes-list>
-    </div>
+  <div class="col-xs-12">
+    <app-classes-list
+      [currentActiveGrade]="currentActiveGrade"
+    ></app-classes-list>
+  </div>
 </div>

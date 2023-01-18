@@ -1,0 +1,11 @@
+img {
+  width: 150px;
+  margin: 0 auto;
+}
+button {
+  width: 150px;
+  background-color: antiquewhite;
+}
+.faded {
+    opacity: .5;
+}

@@ -1,7 +1,15 @@
-<button
-  class="btn btn-primary btn-lg"
-  (click)="onGradeClick()"
-  [disabled]="!active"
->
-  {{ grade.gradeNum }}
-</button>
+<div>
+  <img
+    src="../../../assets/grade.png"
+    alt="grade icon"
+    class="img-responsive"
+    [ngClass]="{faded: faded}"
+  />
+  <button
+    class="btn btn-default btn-lg"
+    (click)="onGradeClick()"
+    [disabled]="!active"
+  >
+    {{ grade.gradeNum }}
+  </button>
+</div>
