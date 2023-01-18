@@ -15,6 +15,11 @@ import { ClassesListComponent } from './components/classes-list/classes-list.com
 import { LoadingComponent } from './utilities/loading/loading.component';
 import { FormsModule } from '@angular/forms';
 import { AddStudentsComponent } from './components/add-students/add-students.component';
+import { HeaderComponent } from './design/header/header.component';
+import { TopBarComponent } from './design/top-bar/top-bar.component';
+import { SideMenuComponent } from './design/side-menu/side-menu.component';
+import { MainComponent } from './design/main/main.component';
+import { ItemComponent } from './design/side-menu/item/item.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +36,11 @@ import { AddStudentsComponent } from './components/add-students/add-students.com
     ClassesListComponent,
     LoadingComponent,
     AddStudentsComponent,
+    HeaderComponent,
+    TopBarComponent,
+    SideMenuComponent,
+    MainComponent,
+    ItemComponent,
   ],
   imports: [
     BrowserModule,

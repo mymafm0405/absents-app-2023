@@ -1,0 +1,9 @@
+.top-bar {
+    background-color: #3b404f;
+    height: 60px;
+    color: wheat;
+    text-align: right;
+    margin: 10px 0px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px #333;
+}

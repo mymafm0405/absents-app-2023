@@ -1,0 +1,9 @@
+.side-menu {
+    background-color: #313541;
+    height: 600px;
+    text-align: left;
+    color: white;
+    margin: 10px 0px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px #333;
+}
