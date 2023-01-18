@@ -1,0 +1,19 @@
+button {
+    width: 100%;
+    color: #333;
+    height: 50px;
+    font-weight: bold;
+    font-size: 20px;
+}
+button:hover {
+    background-color: #ccc;
+}
+button:focus {
+    background-color: bisque;
+}
+.row {
+    margin: 5px 0;
+}
+.co {
+    padding: 0 5px;
+}

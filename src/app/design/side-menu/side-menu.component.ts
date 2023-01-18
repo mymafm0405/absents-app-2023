@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./side-menu.component.css']
 })
 export class SideMenuComponent {
+  menus = [{type: 'insert', name: 'إدخال البيانات'}, {type: 'manage', name: 'الإدارة'}, {type: 'report', name: 'التقارير'}]
 
 }

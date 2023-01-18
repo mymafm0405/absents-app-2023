@@ -1,5 +1,6 @@
 <div class="row side-menu">
-    <div class="col-xs-12">
-        <h3>Side Menu</h3>
+    <div class="col-xs-12 co">
+        <h2>القائمة الرئيسية</h2>
+        <app-item *ngFor="let menu of menus" [menu]="menu"></app-item>
     </div>
 </div>
