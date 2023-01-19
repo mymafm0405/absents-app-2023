@@ -9,6 +9,7 @@
     class="btn btn-default btn-lg"
     (click)="onGradeClick()"
     [disabled]="!active"
+    [ngStyle]="{backgroundColor: !faded && !active ? '#99FFAE' : '', color: '#333', fontWeight: 'bold'}"
   >
     {{ grade.gradeNum }}
   </button>

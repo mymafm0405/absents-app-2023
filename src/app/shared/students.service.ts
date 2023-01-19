@@ -70,9 +70,23 @@ export class StudentsService {
 
   classes: Class[] = [
     new Class('1', 7, 1, 'Class 1'),
-    new Class('2', 8, 1, 'Class 1'),
-    new Class('3', 9, 1, 'Class 1'),
-    new Class('4', 9, 2, 'Class 2'),
+    new Class('2', 7, 2, 'Class 2'),
+    new Class('3', 7, 3, 'Class 3'),
+    new Class('4', 7, 4, 'Class 4'),
+    new Class('5', 7, 5, 'Class 5'),
+    new Class('6', 7, 6, 'Class 6'),
+    new Class('7', 8, 1, 'Class 1'),
+    new Class('8', 8, 2, 'Class 2'),
+    new Class('9', 8, 3, 'Class 3'),
+    new Class('10', 8, 4, 'Class 4'),
+    new Class('11', 8, 5, 'Class 5'),
+    new Class('12', 8, 6, 'Class 6'),
+    new Class('13', 9, 1, 'Class 1'),
+    new Class('14', 9, 2, 'Class 2'),
+    new Class('15', 9, 3, 'Class 3'),
+    new Class('16', 9, 4, 'Class 4'),
+    new Class('17', 9, 5, 'Class 5'),
+    new Class('18', 9, 6, 'Class 6'),
   ];
 
   status: Status[] = [];

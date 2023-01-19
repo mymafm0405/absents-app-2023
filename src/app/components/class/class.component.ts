@@ -11,6 +11,8 @@ import { StudentsService } from 'src/app/shared/students.service';
 export class ClassComponent {
   @Input() currentClass: Class;
   active = true;
+  selected = false;
+  faded = false;
 
   constructor(
     public stuServ: StudentsService,
@@ -20,6 +22,16 @@ export class ClassComponent {
   ngOnInit(): void {
     this.stuServ.classActiveStatus.subscribe((status) => {
       this.active = status;
+      this.selected = false;
+      this.faded = false;
+    });
+
+    this.designServ.classChanged.subscribe((classNum) => {
+      if (classNum === this.currentClass.classNum) {
+        this.selected = true;
+      } else {
+        this.faded = true;
+      }
     });
   }
 
