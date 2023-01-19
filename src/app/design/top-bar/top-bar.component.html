@@ -12,7 +12,7 @@
       <span class="glyphicon glyphicon-remove"></span>
       {{ classNum ? "إغلاق الفصل" : "إغلاق الشعبة" }}
     </button>
-    <button class="btn btn-success" disabled>
+    <button class="btn btn-success" (click)="onSave()" [disabled]="!update">
       <span class="glyphicon glyphicon-floppy-disk"></span>
       حفظ
     </button>

@@ -1,17 +1,23 @@
 <div class="row" *ngIf="menu">
-    <div class="col-xs-12">
-        <div class="current-comp">
-            <h2>{{ menu.name }}</h2>
-            <app-grades-list></app-grades-list>
-            <h3 *ngIf="!gradeNum && menu.type !== 'report'" class="select-grade">قم بإختيار الشعبة</h3>
-        </div>
+  <div class="col-xs-12">
+    <div class="current-comp">
+      <h2>{{ menu.name }}</h2>
+      <app-grades-list></app-grades-list>
+      <h3 *ngIf="!gradeNum && menu.type !== 'report'" class="select-grade">
+        قم بإختيار الشعبة
+      </h3>
+      <app-students-absent-late-list
+        [menuType]="menu.type"
+        *ngIf="showList"
+      ></app-students-absent-late-list>
     </div>
+  </div>
 </div>
 <div class="row" *ngIf="!menu">
-    <div class="col-xs-12">
-        <div class="current-comp">
-            <h1>نظام تسجيل الغياب والحضور</h1>
-            <h3>من فضلك إختر من القائمة الرئيسية</h3>
-        </div>
+  <div class="col-xs-12">
+    <div class="current-comp">
+      <h1>نظام تسجيل الغياب والحضور</h1>
+      <h3>من فضلك إختر من القائمة الرئيسية</h3>
     </div>
+  </div>
 </div>

@@ -10,6 +10,7 @@ import { StudentsService } from 'src/app/shared/students.service';
 export class MainComponent {
   menu: {type: string, name: string};
   gradeNum: number;
+  showList = false;
   
   constructor(private designService: DesignService, private stuServ: StudentsService) {}
 
@@ -27,5 +28,9 @@ export class MainComponent {
         this.gradeNum = null;
       }
     })
+
+    this.stuServ.classActiveStatus.subscribe((status) => {
+      this.showList = !status;
+    });
   }
 }

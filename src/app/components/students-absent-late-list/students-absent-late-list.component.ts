@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DesignService } from 'src/app/shared/design.service';
 import { Status } from 'src/app/shared/status.model';
 import { Student } from 'src/app/shared/student.model';
 import { StudentsService } from 'src/app/shared/students.service';
@@ -12,7 +13,10 @@ export class StudentsAbsentLateListComponent {
   @Input() menuType = '';
 
   students: Student[] = [];
-  constructor(public stuServ: StudentsService) {}
+  constructor(
+    public stuServ: StudentsService,
+    private designServ: DesignService
+  ) {}
   currentActiveGrade: number;
   currentActiveClass: number;
   saving = false;
@@ -21,10 +25,6 @@ export class StudentsAbsentLateListComponent {
   testArrayCopy: { id: string; absent: boolean }[] = [];
 
   ngOnInit() {
-    this.testArrayCopy = this.stuServ.getTestArray();
-    console.log('Test array copy');
-    console.log(this.testArrayCopy);
-
     this.currentDate = new Date().toISOString().split('T')[0];
 
     this.currentActiveGrade = this.stuServ.currentActiveGrade;
@@ -43,9 +43,6 @@ export class StudentsAbsentLateListComponent {
           this.stuServ.currentActiveGrade,
           this.stuServ.currentActiveClass
         );
-        console.log('After I change the date');
-        console.log(this.students);
-        console.log(this.currentDate);
         this.dataChanged = true;
       }
     });
@@ -57,21 +54,18 @@ export class StudentsAbsentLateListComponent {
     this.stuServ.lateOrAbsentsStatusChanged.subscribe((status) => {
       this.dataChanged = status;
     });
+
+    this.designServ.savePressed.subscribe((status) => {
+      if (status) {
+        this.onSaveClass();
+      }
+    });
   }
 
   onDateChange(event: any) {
     this.currentDate = event.target.value;
     console.log(this.currentDate);
     this.stuServ.studentsUpdated.next(true);
-    // this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
-    //   this.currentDate,
-    //   this.stuServ.currentActiveGrade,
-    //   this.stuServ.currentActiveClass
-    // );
-  }
-
-  onCloseClass() {
-    this.stuServ.changeClassActiveStatus(true);
   }
 
   changeStudentAbsentData(stuData: { id: string; absentValue: string }) {
@@ -79,7 +73,6 @@ export class StudentsAbsentLateListComponent {
       .slice()
       .find((stu) => stu.id === stuData.id);
     if (existStudent) {
-      console.log(stuData.absentValue.length);
       if (stuData.absentValue.length > 0) {
         existStudent.absent = true;
         existStudent.reason = stuData.absentValue;
@@ -87,11 +80,7 @@ export class StudentsAbsentLateListComponent {
         existStudent.absent = false;
         existStudent.reason = '';
       }
-      console.log(existStudent);
     }
-    this.testArrayCopy[0].absent = true;
-    console.log('After change test array')
-    console.log(this.testArrayCopy)
   }
 
   changeStudentLateData(stuData: {
@@ -99,7 +88,6 @@ export class StudentsAbsentLateListComponent {
     status: boolean;
     reason: string;
   }) {
-    console.log(stuData);
     const existStudent = this.students.find((stu) => stu.id === stuData.id);
     if (existStudent) {
       if (stuData.status) {
@@ -109,7 +97,6 @@ export class StudentsAbsentLateListComponent {
         existStudent.late = false;
       }
     }
-    console.log(existStudent);
   }
 
   onSaveClass() {
@@ -144,5 +131,8 @@ export class StudentsAbsentLateListComponent {
       console.log('save changes for manage');
       // Here you should fire the HTTP request to save changes to server
     }
+
+    // This is to disabled the save button after finish the saving
+    this.stuServ.lateOrAbsentsStatusChanged.next(false);
   }
 }

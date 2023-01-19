@@ -9,4 +9,6 @@ export class DesignService {
     gradeChanged = new Subject<number>();
     classChanged = new Subject<number>();
     
+    savePressed = new Subject<boolean>();
+    
 }

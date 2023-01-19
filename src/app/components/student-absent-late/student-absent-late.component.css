@@ -1,14 +1,15 @@
 .row {
-    text-align: center;
-    margin: 10px;
-    padding: 10px;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
 }
 .red {
-    background-color: #ffcccc;
+  background-color: #ffcccc;
 }
 .green {
-    background-color: #d0ffd0;
+  background-color: #d0ffd0;
 }
 .orange {
-    background-color: #ffe2ac;
+  background-color: #ffe2ac;
 }

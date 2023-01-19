@@ -10,6 +10,7 @@ import { StudentsService } from 'src/app/shared/students.service';
 export class TopBarComponent {
   gradeNum: number;
   classNum: number;
+  update = false;
 
   constructor(private designServ: DesignService, private stuServ: StudentsService) {}
 
@@ -19,6 +20,13 @@ export class TopBarComponent {
     })
     this.designServ.classChanged.subscribe(classNum => {
       this.classNum = classNum;
+    })
+    this.stuServ.lateOrAbsentsStatusChanged.subscribe((status) => {
+      if (status) {
+        this.update = true;
+      } else {
+        this.update = false;
+      }
     })
   }
 
@@ -30,5 +38,9 @@ export class TopBarComponent {
       this.stuServ.changeClassActiveStatus(true);
       this.classNum = null;
     }
+  }
+
+  onSave() {
+    this.designServ.savePressed.next(true)
   }
 }

@@ -1,3 +1,19 @@
 .row {
     text-align: center;
 }
+.date {
+    background-color: antiquewhite;
+    border-radius: 10px;
+    border: 1px solid #333;
+    box-shadow: 10px 10px 20px #ccc;
+    margin-top: 10px;
+}
+h3 {
+    color: brown;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+h2 {
+    margin: 0;
+    padding: 5px;
+}

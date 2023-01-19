@@ -1,36 +1,20 @@
+<hr>
 <div class="row">
+  <div class="col-xs-12">
+    <h3>قم بإختيار تاريخ اليوم للإدخال</h3>
+  </div>
+</div>
+<div class="row text-center">
   <div class="col-xs-4 col-xs-push-4">
     <input type="date" class="form-control" (change)="onDateChange($event)">
   </div>
 </div>
 <div class="row text-center">
-  <div class="col-xs-12">
-    <h3>
-      Students List in class ( {{ currentActiveGrade }} -
-      {{ currentActiveClass }} ) For Date ( {{ currentDate }} )
-    </h3>
+  <div class="col-xs-4 col-xs-push-4 date">
+    <h2>{{ currentDate }}</h2>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-8"></div>
-  <div class="col-xs-2">
-    <button
-      class="btn btn-success"
-      (click)="onSaveClass()"
-      [disabled]="saving || !dataChanged"
-    >
-      <app-loading *ngIf="saving"></app-loading>
-      {{ !saving ? "Save" : "" }}
-    </button>
-  </div>
-  <div class="col-xs-2">
-    <!-- <button class="btn btn-danger" (click)="onCloseClass()" [disabled]="saving">
-      Close class
-    </button> -->
-  </div>
-</div>
-<h4 *ngIf="menuType === 'manage'">Manage menu</h4>
-<h4 *ngIf="menuType === 'insert'">Insert menu</h4>
+<hr>
 
 <!-- Here is the (insert menu) for students -->
 <div class="row" *ngIf="menuType === 'insert'">
