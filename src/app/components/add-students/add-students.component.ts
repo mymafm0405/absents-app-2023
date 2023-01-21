@@ -36,6 +36,7 @@ export class AddStudentsComponent {
     );
 
     this.studServ.addStudent(newStudent);
+    this.studServ.lateOrAbsentsStatusChanged.next(true);
   }
 
   onFileChange(event: any) {
@@ -93,5 +94,6 @@ export class AddStudentsComponent {
       this.newStudents
     );
     this.loadButton = false;
+    this.studServ.lateOrAbsentsStatusChanged.next(true);
   }
 }

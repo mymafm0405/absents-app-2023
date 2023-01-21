@@ -1,38 +1,44 @@
-<hr>
-<div class="row">
-  <div class="col-xs-12">
-    <h3>قم بإختيار تاريخ اليوم للإدخال</h3>
+<!-- Here is the (insert menu) for students -->
+<div *ngIf="menuType === 'insert'">
+  <hr />
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>قم بإختيار تاريخ اليوم للإدخال</h3>
+    </div>
   </div>
-</div>
-<div class="row text-center">
-  <div class="col-xs-4 col-xs-push-4">
-    <input type="date" class="form-control" (change)="onDateChange($event)">
+  <div class="row text-center">
+    <div class="col-xs-4 col-xs-push-4">
+      <input type="date" class="form-control" (change)="onDateChange($event)" />
+    </div>
   </div>
-</div>
-<div class="row text-center">
-  <div class="col-xs-4 col-xs-push-4 date">
-    <h2>{{ currentDate }}</h2>
+  <div class="row text-center">
+    <div class="col-xs-4 col-xs-push-4 date">
+      <h2>{{ currentDate }}</h2>
+    </div>
   </div>
+  <hr />
 </div>
-<hr>
 
 <!-- Here is the (insert menu) for students -->
-<div class="row" *ngIf="menuType === 'insert'">
-  <div class="col-xs-3">Phone</div>
-  <div class="col-xs-3">Late</div>
-  <div class="col-xs-3">Absent</div>
-  <div class="col-xs-3">Name</div>
+<div class="row table-header" *ngIf="menuType === 'insert'">
+  <div class="col-xs-3">الـتلـيفون</div>
+  <div class="col-xs-3">التـأخـيـر</div>
+  <div class="col-xs-3">الغـيـاب</div>
+  <div class="col-xs-3">الإســم</div>
 </div>
 
 <!-- Here is the (manage menu) for students -->
-<app-add-students
-  *ngIf="menuType === 'manage'"
-  [grade]="currentActiveGrade"
-  [class]="currentActiveClass"
-></app-add-students>
-<div class="row" *ngIf="menuType === 'manage'">
-  <div class="col-xs-8">Actions</div>
-  <div class="col-xs-4">Name</div>
+<div *ngIf="menuType === 'manage'">
+  <hr />
+  <app-add-students
+    [grade]="currentActiveGrade"
+    [class]="currentActiveClass"
+  ></app-add-students>
+  <hr />
+  <div class="row table-header">
+    <div class="col-xs-8">الإجــراء</div>
+    <div class="col-xs-4">الإســم</div>
+  </div>
 </div>
 
 <!-- here for (both menus) -->

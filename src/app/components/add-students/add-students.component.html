@@ -1,11 +1,53 @@
-<div class="row">
+<div class="row text-center">
+  <div class="col-xs-2"></div>
   <div class="col-xs-4">
-    <input type="file" class="form-control" (change)="onFileChange($event)" />
-    <button class="btn btn-info" [disabled]="!loadButton" (click)="onLoadAndReplace()">Load & Replace</button>
+    <div class="row">
+      <div class="col-xs-8">
+        <input
+          type="file"
+          class="form-control"
+          (change)="onFileChange($event)"
+        />
+      </div>
+      <div class="col-xs-4">
+        <button
+          class="btn btn-info"
+          [disabled]="!loadButton"
+          (click)="onLoadAndReplace()"
+        >
+          تـحمـيل المـلف
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="col-xs-8">
-    <input type="text" class="form-control" placeholder="Student name" [(ngModel)]="studentName" />
-    <input type="text" class="form-control" placeholder="Phone number" [(ngModel)]="studentPhone" />
-    <button class="btn btn-primary" (click)="onAddStudent()" [disabled]="studentName.trim().length === 0 || studentPhone.trim().length === 0">Add student</button>
-</div>
+  <div class="col-xs-4" style="border-left: 1px solid #ccc; margin-left: 20px;">
+    <div class="row">
+      <div class="col-xs-10">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="إسم الطالب"
+          [(ngModel)]="studentName"
+        />
+        <br />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="رقم التليفون"
+          [(ngModel)]="studentPhone"
+        />
+      </div>
+      <div class="col-xs-2">
+        <button
+          class="btn btn-primary"
+          (click)="onAddStudent()"
+          [disabled]="
+            studentName.trim().length === 0 || studentPhone.trim().length === 0
+          "
+        >
+          إضـافة الطـالـب
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

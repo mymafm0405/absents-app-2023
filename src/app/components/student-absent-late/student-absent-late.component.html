@@ -1,6 +1,6 @@
 <!-- Here the menu for insert -->
 <div
-  class="row"
+  class="row student-data"
   *ngIf="menuType === 'insert'"
   [ngClass]="{
     red: absentStatus.length > 0 || student.absent,
@@ -74,9 +74,19 @@
 </div>
 
 <!-- Here the menu for manage -->
-<div class="row" *ngIf="menuType === 'manage'">
-  <div class="col-xs-3"><button class="btn btn-danger" (click)="onDelete()"><span class="glyphicon glyphicon-remove"></span></button></div>
-  <div class="col-xs-3"><button class="btn btn-default" disabled><span class="glyphicon glyphicon-pencil"></span></button></div>
-  <div class="col-xs-3"><button class="btn btn-default" disabled><span class="glyphicon glyphicon-list-alt"></span></button></div>
-  <div class="col-xs-3">{{ student.name }}</div>
+<div class="row student-data" *ngIf="menuType === 'manage'">
+  <div class="col-xs-8">
+    <button class="btn btn-danger" (click)="onDelete()">
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    |
+    <button class="btn btn-default" disabled>
+      <span class="glyphicon glyphicon-pencil"></span>
+    </button>
+    |
+    <button class="btn btn-default" disabled>
+      <span class="glyphicon glyphicon-list-alt"></span>
+    </button>
+  </div>
+  <div class="col-xs-4">{{ student.name }}</div>
 </div>
