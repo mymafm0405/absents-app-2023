@@ -11,6 +11,7 @@ export class TopBarComponent {
   gradeNum: number;
   classNum: number;
   update = false;
+  saving = false;
 
   constructor(private designServ: DesignService, private stuServ: StudentsService) {}
 
@@ -27,6 +28,9 @@ export class TopBarComponent {
       } else {
         this.update = false;
       }
+    })
+    this.stuServ.savingStatus.subscribe(status => {
+      this.saving = status;
     })
   }
 

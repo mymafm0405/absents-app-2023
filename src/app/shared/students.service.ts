@@ -86,15 +86,17 @@ export class StudentsService {
   }
 
   getAllStatus() {
-    this.http.get('https://alforqan-absents-default-rtdb.firebaseio.com/status.json').subscribe((data) => {
-      console.log(data)
-      for(const key in data) {
-        if (data.hasOwnProperty(key)) {
-          console.log(data[key])
-          this.status.push(data[key])
+    this.http
+      .get('https://alforqan-absents-default-rtdb.firebaseio.com/status.json')
+      .subscribe((data) => {
+        console.log(data);
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            console.log(data[key]);
+            this.status.push(data[key]);
+          }
         }
-      }
-    })
+      });
   }
 
   getAllAbsentsByDate(date: string) {
@@ -235,6 +237,7 @@ export class StudentsService {
   }
 
   saveToStatus(currentStatus: Status) {
+    this.savingStatus.next(true);
     const existStatus = this.status.find((st) => {
       if (st.date === currentStatus.date) {
         if (
@@ -262,7 +265,7 @@ export class StudentsService {
         )
         .subscribe((res) => {
           console.log(res);
-          this.lateOrAbsentsStatusChanged.next(false);
+          this.savingStatus.next(false);
         });
       //
     } else {
@@ -284,7 +287,7 @@ export class StudentsService {
           console.log(resId.name);
           currentStatus.id = resId.name;
           this.status.push(currentStatus);
-          this.lateOrAbsentsStatusChanged.next(false);
+          this.savingStatus.next(false);
         });
     }
   }

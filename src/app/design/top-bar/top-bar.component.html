@@ -13,8 +13,11 @@
       {{ classNum ? "إغلاق الفصل" : "إغلاق الشعبة" }}
     </button>
     <button class="btn btn-success" (click)="onSave()" [disabled]="!update">
-      <span *ngIf="" class="glyphicon glyphicon-floppy-disk"></span>
-      حفظ
+      <span *ngIf="!saving">
+        <span class="glyphicon glyphicon-floppy-disk"></span>
+        حفظ
+      </span>
+      <app-loading *ngIf="saving"></app-loading>
     </button>
   </div>
 </div>
