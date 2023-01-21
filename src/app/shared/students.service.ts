@@ -4,6 +4,7 @@ import { Class } from './class.model';
 import { Grade } from './grade.model';
 import { Status } from './status.model';
 import { Student } from './student.model';
+import { HttpClient } from '@angular/common/http';
 
 import * as LODASH from 'lodash';
 
@@ -20,18 +21,7 @@ export class StudentsService {
   currentActiveGrade: number;
   currentActiveClass: number;
 
-  testArray: { id: string; absent: boolean }[] = [
-    {
-      id: '1',
-      absent: false,
-    },
-  ];
-
-  getTestArray() {
-    // const testcopy = [...this.testArray];
-    const testcopy = LODASH.cloneDeep(this.testArray);
-    return testcopy;
-  }
+  constructor(private http: HttpClient) {}
 
   private students: Student[] = [
     new Student(
@@ -200,24 +190,9 @@ export class StudentsService {
       console.log('Freshhh students');
       console.log(freshStudent);
       console.log('Test array');
-      console.log(this.testArray);
       return freshStudent;
     }
   }
-
-  // getStatusByDateAndGradeAndClass(
-  //   date: string,
-  //   gradeNum: number,
-  //   classNum: number
-  // ) {
-  //   const foundStatus = this.status.find((stat) => {
-  //     stat.date === date &&
-  //       stat.gradeNum === gradeNum &&
-  //       stat.classNum === classNum;
-  //   });
-
-  //   if()
-  // }
 
   getAllGrades() {
     return this.grades;
@@ -248,7 +223,6 @@ export class StudentsService {
   }
 
   saveToStatus(currentStatus: Status) {
-    console.log(currentStatus);
     const existStatus = this.status.find((st) => {
       if (st.date === currentStatus.date) {
         if (
@@ -265,7 +239,9 @@ export class StudentsService {
     });
 
     if (existStatus) {
-      console.log(existStatus.date, ' Found');
+      // update the exist status in database
+      //
+      //
       existStatus.students = currentStatus.students;
     } else {
       const id = (
@@ -276,15 +252,17 @@ export class StudentsService {
 
       currentStatus.id = id;
 
-      console.log(currentStatus.date, ' not found');
-      console.log(currentStatus.students, ' not found');
-
-      this.status.push(currentStatus);
-
-      console.log(this.status);
+      // save new status
+      this.http
+        .post(
+          'https://alforqan-absents-default-rtdb.firebaseio.com/status.json',
+          currentStatus
+        )
+        .subscribe((data) => {
+          console.log(data);
+          this.status.push(currentStatus);
+        });
     }
-    console.log('Original students');
-    console.log(this.students);
   }
 
   changeLateOrAbsentsStatus(status: boolean) {
