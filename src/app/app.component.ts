@@ -32,7 +32,12 @@ export class AppComponent {
         this.manageSelected = false;
       }
     });
+
+    // Load all status from server
     this.stuServ.getAllStatus();
+
+    // Load all students from server
+    this.stuServ.loadAllStudentsFromServer()
   }
 
   onManage() {

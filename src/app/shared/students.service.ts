@@ -23,34 +23,36 @@ export class StudentsService {
 
   constructor(private http: HttpClient) {}
 
-  private students: Student[] = [
-    new Student(
-      '1',
-      'Mahmoud Yhya',
-      7,
-      1,
-      '66548110',
-      false,
-      true,
-      'Nothing',
-      true
-    ),
-    new Student('2', 'Mido', 7, 1, '66548110', false, false, '', true),
-    new Student(
-      '3',
-      'Ahmed',
-      7,
-      1,
-      '66548110',
-      true,
-      false,
-      'خارج البلاد',
-      true
-    ),
-    new Student('4', 'Ismail', 8, 1, '50001953', false, false, '', true),
-    new Student('5', 'Hamad', 8, 1, '50001953', false, false, '', true),
-    new Student('6', 'Adel', 8, 1, '50001953', false, false, '', true),
-  ];
+  // private students: Student[] = [
+  //   new Student(
+  //     '1',
+  //     'Mahmoud Yhya',
+  //     7,
+  //     1,
+  //     '66548110',
+  //     false,
+  //     true,
+  //     'Nothing',
+  //     true
+  //   ),
+  //   new Student('2', 'Mido', 7, 1, '66548110', false, false, '', true),
+  //   new Student(
+  //     '3',
+  //     'Ahmed',
+  //     7,
+  //     1,
+  //     '66548110',
+  //     true,
+  //     false,
+  //     'خارج البلاد',
+  //     true
+  //   ),
+  //   new Student('4', 'Ismail', 8, 1, '50001953', false, false, '', true),
+  //   new Student('5', 'Hamad', 8, 1, '50001953', false, false, '', true),
+  //   new Student('6', 'Adel', 8, 1, '50001953', false, false, '', true),
+  // ];
+
+  students: Student[] = [];
 
   grades: Grade[] = [
     new Grade('g7', 7, 'Grade 7'),
@@ -85,14 +87,43 @@ export class StudentsService {
     return LODASH.cloneDeep(this.students);
   }
 
+  loadAllStudentsFromServer() {
+    this.http
+      .get('https://alforqan-absents-default-rtdb.firebaseio.com/students.json')
+      .subscribe((data) => {
+        if (data !== null) {
+          for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+              this.students.push(data[key]);
+            }
+          }
+        }
+        this.studentsUpdated.next(true);
+      });
+  }
+
+  getStudentsByGradeAndClassOnly(gradeNum: number, classNum: number) {
+    const allStudents: Student[] = LODASH.cloneDeep(this.students);
+    const stuForGradeAndClass = allStudents.filter((stu) => {
+      if (
+        stu.gradeNum === gradeNum &&
+        stu.classNum === classNum &&
+        stu.active === true
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return stuForGradeAndClass;
+  }
+
   getAllStatus() {
     this.http
       .get('https://alforqan-absents-default-rtdb.firebaseio.com/status.json')
       .subscribe((data) => {
-        console.log(data);
         for (const key in data) {
           if (data.hasOwnProperty(key)) {
-            console.log(data[key]);
             this.status.push(data[key]);
           }
         }
@@ -137,6 +168,7 @@ export class StudentsService {
       console.log(existStudent);
       existStudent.active = false;
       this.studentsUpdated.next(true);
+      this.lateOrAbsentsStatusChanged.next(true);
     }
   }
 
@@ -156,7 +188,7 @@ export class StudentsService {
       });
       this.students = this.students.concat(newStudents);
       console.log(this.students);
-      // console.log(this.students);
+
       this.studentsUpdated.next(true);
     }
   }
@@ -290,6 +322,20 @@ export class StudentsService {
           this.savingStatus.next(false);
         });
     }
+  }
+
+  saveChangesOnStudents() {
+    this.savingStatus.next(true);
+    // Save updated students to the server
+    this.http
+      .put(
+        'https://alforqan-absents-default-rtdb.firebaseio.com/students.json',
+        this.students
+      )
+      .subscribe((res) => {
+        this.savingStatus.next(false);
+        this.lateOrAbsentsStatusChanged.next(false)
+      });
   }
 
   changeLateOrAbsentsStatus(status: boolean) {

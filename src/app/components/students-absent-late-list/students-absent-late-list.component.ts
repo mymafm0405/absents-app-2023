@@ -19,8 +19,8 @@ export class StudentsAbsentLateListComponent {
   ) {}
   currentActiveGrade: number;
   currentActiveClass: number;
-  saving = false;
-  dataChanged = false;
+  // saving = false;
+  // dataChanged = false;
   currentDate = '';
   testArrayCopy: { id: string; absent: boolean }[] = [];
 
@@ -30,29 +30,61 @@ export class StudentsAbsentLateListComponent {
     this.currentActiveGrade = this.stuServ.currentActiveGrade;
     this.currentActiveClass = this.stuServ.currentActiveClass;
 
-    this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
-      this.currentDate,
-      this.stuServ.currentActiveGrade,
-      this.stuServ.currentActiveClass
-    );
-
-    this.stuServ.studentsUpdated.subscribe((status) => {
-      if (status) {
+    // To decide which student list to load depend on the menuType
+    this.designServ.menuChanged.subscribe((menu) => {
+      console.log('menu changed');
+      if (menu.type === 'insert') {
         this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
           this.currentDate,
           this.stuServ.currentActiveGrade,
           this.stuServ.currentActiveClass
         );
-        this.dataChanged = true;
+      } else if (menu.type === 'manage') {
+        this.students = this.stuServ.getStudentsByGradeAndClassOnly(
+          this.stuServ.currentActiveGrade,
+          this.stuServ.currentActiveClass
+        );
+      }
+    });
+    // Here we load our students at first loading of this component
+    if (this.menuType === 'insert') {
+      console.log('load insert menu students');
+
+      this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
+        this.currentDate,
+        this.stuServ.currentActiveGrade,
+        this.stuServ.currentActiveClass
+      );
+    } else if (this.menuType === 'manage') {
+      console.log('load manage menu students');
+      this.students = this.stuServ.getStudentsByGradeAndClassOnly(
+        this.stuServ.currentActiveGrade,
+        this.stuServ.currentActiveClass
+      );
+    }
+    //
+
+    this.stuServ.studentsUpdated.subscribe((status) => {
+      if (status) {
+        // this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
+        //   this.currentDate,
+        //   this.stuServ.currentActiveGrade,
+        //   this.stuServ.currentActiveClass
+        // );
+        this.students = this.stuServ.getStudentsByGradeAndClassOnly(
+          this.stuServ.currentActiveGrade,
+          this.stuServ.currentActiveClass
+        );
+        // this.dataChanged = true;
       }
     });
 
-    this.stuServ.savingStatus.subscribe((status) => {
-      this.saving = status;
-    });
+    // this.stuServ.savingStatus.subscribe((status) => {
+    //   this.saving = status;
+    // });
 
     this.stuServ.lateOrAbsentsStatusChanged.subscribe((status) => {
-      this.dataChanged = status;
+      // this.dataChanged = status;
     });
 
     this.designServ.savePressed.subscribe((status) => {
@@ -128,6 +160,7 @@ export class StudentsAbsentLateListComponent {
       // If the menuType === 'manage'
     } else if (this.menuType === 'manage') {
       console.log('save changes for manage');
+      this.stuServ.saveChangesOnStudents()
       // Here you should fire the HTTP request to save changes to server
     }
 
