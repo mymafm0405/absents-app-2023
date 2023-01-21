@@ -101,11 +101,11 @@ export class StudentsAbsentLateListComponent {
 
   onSaveClass() {
     // This should be changed when using http requests
-    this.stuServ.savingStatus.next(true);
-    setTimeout(() => {
-      this.stuServ.savingStatus.next(false);
-      this.dataChanged = false;
-    }, 2000);
+    // this.stuServ.savingStatus.next(true);
+    // setTimeout(() => {
+    //   this.stuServ.savingStatus.next(false);
+    //   this.dataChanged = false;
+    // }, 2000);
 
     // If the menuType === 'insert'
     if (this.menuType === 'insert') {
@@ -123,7 +123,6 @@ export class StudentsAbsentLateListComponent {
         this.currentActiveClass,
         this.students
       );
-      console.log(currentStatus);
       this.stuServ.saveToStatus(currentStatus);
 
       // If the menuType === 'manage'
@@ -133,6 +132,6 @@ export class StudentsAbsentLateListComponent {
     }
 
     // This is to disabled the save button after finish the saving
-    this.stuServ.lateOrAbsentsStatusChanged.next(false);
+    // this.stuServ.lateOrAbsentsStatusChanged.next(false);
   }
 }

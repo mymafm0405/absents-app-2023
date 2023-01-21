@@ -85,6 +85,18 @@ export class StudentsService {
     return LODASH.cloneDeep(this.students);
   }
 
+  getAllStatus() {
+    this.http.get('https://alforqan-absents-default-rtdb.firebaseio.com/status.json').subscribe((data) => {
+      console.log(data)
+      for(const key in data) {
+        if (data.hasOwnProperty(key)) {
+          console.log(data[key])
+          this.status.push(data[key])
+        }
+      }
+    })
+  }
+
   getAllAbsentsByDate(date: string) {
     const foundStudents: Student[] = [];
     this.status.forEach((sta) => {
@@ -240,9 +252,19 @@ export class StudentsService {
 
     if (existStatus) {
       // update the exist status in database
-      //
-      //
       existStatus.students = currentStatus.students;
+      this.http
+        .patch(
+          'https://alforqan-absents-default-rtdb.firebaseio.com/status/' +
+            existStatus.id +
+            '.json',
+          existStatus
+        )
+        .subscribe((res) => {
+          console.log(res);
+          this.lateOrAbsentsStatusChanged.next(false);
+        });
+      //
     } else {
       const id = (
         Math.random() +
@@ -258,9 +280,11 @@ export class StudentsService {
           'https://alforqan-absents-default-rtdb.firebaseio.com/status.json',
           currentStatus
         )
-        .subscribe((data) => {
-          console.log(data);
+        .subscribe((resId: { name: string }) => {
+          console.log(resId.name);
+          currentStatus.id = resId.name;
           this.status.push(currentStatus);
+          this.lateOrAbsentsStatusChanged.next(false);
         });
     }
   }
