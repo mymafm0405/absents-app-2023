@@ -21,11 +21,11 @@ export class StudentsAbsentLateListComponent {
   currentActiveClass: number;
   // saving = false;
   // dataChanged = false;
-  currentDate = '';
+  currentDate = new Date().toISOString().split('T')[0];
   testArrayCopy: { id: string; absent: boolean }[] = [];
 
   ngOnInit() {
-    this.currentDate = new Date().toISOString().split('T')[0];
+    // this.currentDate = new Date().toISOString().split('T')[0];
 
     this.currentActiveGrade = this.stuServ.currentActiveGrade;
     this.currentActiveClass = this.stuServ.currentActiveClass;
@@ -49,12 +49,16 @@ export class StudentsAbsentLateListComponent {
     // Here we load our students at first loading of this component
     if (this.menuType === 'insert') {
       console.log('load insert menu students');
-
+      console.log(this.currentDate);
+      
       this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
         this.currentDate,
         this.stuServ.currentActiveGrade,
         this.stuServ.currentActiveClass
       );
+
+      console.log(this.students);
+      
     } else if (this.menuType === 'manage') {
       console.log('load manage menu students');
       this.students = this.stuServ.getStudentsByGradeAndClassOnly(
@@ -77,9 +81,9 @@ export class StudentsAbsentLateListComponent {
             this.stuServ.currentActiveGrade,
             this.stuServ.currentActiveClass
           );
-          console.log(this.students)
+          console.log(this.students);
           console.log('should delete it');
-          
+
           // this.dataChanged = true;
         }
       }
@@ -147,8 +151,6 @@ export class StudentsAbsentLateListComponent {
 
     // If the menuType === 'insert'
     if (this.menuType === 'insert') {
-      this.stuServ.changeLateOrAbsentsStatus(false);
-
       // Saving to status
 
       // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
@@ -162,7 +164,7 @@ export class StudentsAbsentLateListComponent {
         this.students
       );
       console.log('why saving to status here?????');
-      
+
       this.stuServ.saveToStatus(currentStatus);
 
       // If the menuType === 'manage'
@@ -171,6 +173,8 @@ export class StudentsAbsentLateListComponent {
       this.stuServ.saveChangesOnStudents();
       // Here you should fire the HTTP request to save changes to server
     }
+
+    this.stuServ.changeLateOrAbsentsStatus(false);
 
     // This is to disabled the save button after finish the saving
     // this.stuServ.lateOrAbsentsStatusChanged.next(false);

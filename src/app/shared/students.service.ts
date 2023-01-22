@@ -274,19 +274,24 @@ export class StudentsService {
 
   saveToStatus(currentStatus: Status) {
     this.savingStatus.next(true);
+    // const existStatus = this.status.find((st) => {
+    //   if (st.date === currentStatus.date) {
+    //     if (
+    //       st.gradeNum === currentStatus.gradeNum &&
+    //       st.classNum === currentStatus.classNum
+    //     ) {
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }
+    //   } else {
+    //     return false;
+    //   }
+    // });
     const existStatus = this.status.find((st) => {
-      if (st.date === currentStatus.date) {
-        if (
-          st.gradeNum === currentStatus.gradeNum &&
-          st.classNum === currentStatus.classNum
-        ) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
+      st.date === currentStatus.date &&
+        st.gradeNum === currentStatus.gradeNum &&
+        st.classNum === currentStatus.classNum;
     });
 
     if (existStatus) {
