@@ -1,3 +1,10 @@
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
 .top-bar {
     background-color: #3b404f;
     height: 80px;

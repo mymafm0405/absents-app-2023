@@ -2,14 +2,23 @@
   <div class="col-xs-12">
     <div class="current-comp">
       <h2>{{ menu.name }}</h2>
-      <app-grades-list></app-grades-list>
-      <h3 *ngIf="!gradeNum && menu.type !== 'report'" class="select-grade">
-        قم بإختيار الشعبة
-      </h3>
-      <app-students-absent-late-list
-        [menuType]="menu.type"
-        *ngIf="showList"
-      ></app-students-absent-late-list>
+      <div *ngIf="menu.type !== 'report'">
+        <app-grades-list></app-grades-list>
+        <h3 *ngIf="!gradeNum && menu.type !== 'report'" class="select-grade">
+          قم بإختيار الشعبة
+        </h3>
+        <app-students-absent-late-list
+          [menuType]="menu.type"
+          *ngIf="showList"
+        ></app-students-absent-late-list>
+      </div>
+      <!-- Show report section -->
+      <div class="report-section">
+        <app-students-report-list
+          *ngIf="menu.type === 'report'"
+        ></app-students-report-list>
+      </div>
+      <!---->
     </div>
   </div>
 </div>

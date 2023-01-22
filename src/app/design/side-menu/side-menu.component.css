@@ -1,3 +1,10 @@
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
 .side-menu {
     background-color: #313541;
     height: 600px;

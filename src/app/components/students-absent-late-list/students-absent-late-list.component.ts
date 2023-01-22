@@ -66,16 +66,22 @@ export class StudentsAbsentLateListComponent {
 
     this.stuServ.studentsUpdated.subscribe((status) => {
       if (status) {
-        // this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
-        //   this.currentDate,
-        //   this.stuServ.currentActiveGrade,
-        //   this.stuServ.currentActiveClass
-        // );
-        this.students = this.stuServ.getStudentsByGradeAndClassOnly(
-          this.stuServ.currentActiveGrade,
-          this.stuServ.currentActiveClass
-        );
-        // this.dataChanged = true;
+        if (this.menuType === 'insert') {
+          this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
+            this.currentDate,
+            this.stuServ.currentActiveGrade,
+            this.stuServ.currentActiveClass
+          );
+        } else if (this.menuType === 'manage') {
+          this.students = this.stuServ.getStudentsByGradeAndClassOnly(
+            this.stuServ.currentActiveGrade,
+            this.stuServ.currentActiveClass
+          );
+          console.log(this.students)
+          console.log('should delete it');
+          
+          // this.dataChanged = true;
+        }
       }
     });
 
@@ -155,12 +161,14 @@ export class StudentsAbsentLateListComponent {
         this.currentActiveClass,
         this.students
       );
+      console.log('why saving to status here?????');
+      
       this.stuServ.saveToStatus(currentStatus);
 
       // If the menuType === 'manage'
     } else if (this.menuType === 'manage') {
       console.log('save changes for manage');
-      this.stuServ.saveChangesOnStudents()
+      this.stuServ.saveChangesOnStudents();
       // Here you should fire the HTTP request to save changes to server
     }
 

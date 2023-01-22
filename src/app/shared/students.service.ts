@@ -98,13 +98,15 @@ export class StudentsService {
             }
           }
         }
+        console.log(this.students);
+
         this.studentsUpdated.next(true);
       });
   }
 
   getStudentsByGradeAndClassOnly(gradeNum: number, classNum: number) {
-    const allStudents: Student[] = LODASH.cloneDeep(this.students);
-    const stuForGradeAndClass = allStudents.filter((stu) => {
+    // const allStudents: Student[] = LODASH.cloneDeep(this.students);
+    const stuForGradeAndClass = this.students.filter((stu) => {
       if (
         stu.gradeNum === gradeNum &&
         stu.classNum === classNum &&
@@ -115,6 +117,7 @@ export class StudentsService {
         return false;
       }
     });
+    console.log(stuForGradeAndClass);
     return stuForGradeAndClass;
   }
 
@@ -167,6 +170,7 @@ export class StudentsService {
     if (existStudent) {
       console.log(existStudent);
       existStudent.active = false;
+      console.log(existStudent);
       this.studentsUpdated.next(true);
       this.lateOrAbsentsStatusChanged.next(true);
     }
@@ -334,7 +338,7 @@ export class StudentsService {
       )
       .subscribe((res) => {
         this.savingStatus.next(false);
-        this.lateOrAbsentsStatusChanged.next(false)
+        this.lateOrAbsentsStatusChanged.next(false);
       });
   }
 

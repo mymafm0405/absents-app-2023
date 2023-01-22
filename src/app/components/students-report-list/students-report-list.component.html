@@ -1,25 +1,12 @@
-<div class="row text-center">
+<div class="row text-center no-print">
   <div class="col-xs-12">
-    <h3>Reports</h3>
+    <h3><span class="title">اختر الفترة ثم نوع التقرير</span></h3>
   </div>
 </div>
-<div class="row text-center">
+<div class="row text-center no-print">
   <div class="col-xs-6">
     <div class="form-group">
-      <label for="from">From:</label>
-      <input
-        id="from"
-        type="date"
-        class="form-control"
-        placeholder=""
-        (change)="onDateFromChange()"
-        [(ngModel)]="selectedDateFrom"
-      />
-    </div>
-  </div>
-  <div class="col-xs-6">
-    <div class="form-group">
-      <label for="to">To:</label>
+      <label for="to"><h3>: إلــى</h3></label>
       <input
         id="to"
         type="date"
@@ -27,6 +14,19 @@
         placeholder=""
         (change)="onDateToChange()"
         [(ngModel)]="selectedDateTo"
+      />
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="form-group">
+      <label for="from"><h3>: مــن</h3></label>
+      <input
+        id="from"
+        type="date"
+        class="form-control"
+        placeholder=""
+        (change)="onDateFromChange()"
+        [(ngModel)]="selectedDateFrom"
       />
     </div>
   </div>
@@ -43,14 +43,14 @@
     />
   </div>
 </div> -->
-<div class="row text-center" style="margin-top: 30px">
+<div class="row text-center no-print" style="margin-top: 30px">
   <div class="col-xs-6">
     <button
       class="btn btn-warning"
       (click)="onLate()"
       [disabled]="selectedDateFrom.trim().length === 0 || selectedDateTo.trim().length === 0"
     >
-      Late
+      الـمـتـأخـريـن
     </button>
   </div>
   <div class="col-xs-6">
@@ -59,13 +59,13 @@
       (click)="onAbsents()"
       [disabled]="selectedDateFrom.trim().length === 0 || selectedDateTo.trim().length === 0"
     >
-      Absents
+      الـغــائـبـيـن
     </button>
   </div>
 </div>
 <div class="row text-center" *ngIf="optionClicked">
   <div class="col-xs-12">
-    <h3>Report from {{ selectedDateFrom }} to {{ selectedDateTo }}</h3>
+    <h3>{{ selectedDateTo }} --- {{ selectedDateFrom }}</h3>
   </div>
 </div>
 <div class="row my-table" *ngIf="optionClicked && myReturnedStudents.length > 0">
@@ -73,11 +73,11 @@
     <table class="table table-striped">
       <tbody>
         <tr>
-          <th *ngIf="selectedDateFrom !== selectedDateTo">Counter</th>
-          <th>Reason</th>
-          <th>Name</th>
-          <th>Class</th>
-          <th>Grade</th>
+          <th *ngIf="selectedDateFrom !== selectedDateTo">عدد مرات الغياب</th>
+          <th>الـسـبـب</th>
+          <th>إسم الطـالب</th>
+          <th>الفـصـل</th>
+          <th>الـشـعـبة</th>
         </tr>
         <tr *ngFor="let item of myReturnedStudents">
           <td *ngIf="selectedDateFrom !== selectedDateTo">{{item.counter}}</td>
