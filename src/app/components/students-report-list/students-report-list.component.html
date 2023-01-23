@@ -65,7 +65,7 @@
 </div>
 <div class="row text-center" *ngIf="optionClicked">
   <div class="col-xs-12">
-    <h3>{{ selectedDateTo }} --- {{ selectedDateFrom }}</h3>
+    <h3><span style="color: red;">{{ selectedDateTo }}</span> --- <span style="color: green;">{{ selectedDateFrom }}</span></h3>
   </div>
 </div>
 <div class="row my-table" *ngIf="optionClicked && myReturnedStudents.length > 0">
