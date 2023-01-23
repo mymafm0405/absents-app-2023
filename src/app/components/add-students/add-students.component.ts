@@ -60,7 +60,7 @@ export class AddStudentsComponent {
         this.data = XLSX.utils.sheet_to_json(workSheet, { header: 1 });
         // console.log(this.data);
 
-        for (const row of this.data.slice(2)) {
+        for (const row of this.data.slice(1)) {
           if (row.length === 3) {
             const newStudent = new Student(
               // This is a hash of student name to make sure the id is not duplicated
