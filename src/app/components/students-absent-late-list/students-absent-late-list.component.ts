@@ -22,11 +22,15 @@ export class StudentsAbsentLateListComponent {
   // saving = false;
   // dataChanged = false;
   currentDate = new Date().toISOString().split('T')[0];
-  testArrayCopy: { id: string; absent: boolean }[] = [];
+  currentStatus: Status;
 
   ngOnInit() {
+    // Reset current status
+    this.currentStatus = null;
+    
     // this.currentDate = new Date().toISOString().split('T')[0];
-
+    this.stuServ.setCurrentDate(this.currentDate)
+    
     this.currentActiveGrade = this.stuServ.currentActiveGrade;
     this.currentActiveClass = this.stuServ.currentActiveClass;
 
@@ -50,7 +54,7 @@ export class StudentsAbsentLateListComponent {
     if (this.menuType === 'insert') {
       console.log('load insert menu students');
       console.log(this.currentDate);
-      
+
       this.students = this.stuServ.getStudentsByGradeAndClassAndDate(
         this.currentDate,
         this.stuServ.currentActiveGrade,
@@ -58,7 +62,6 @@ export class StudentsAbsentLateListComponent {
       );
 
       console.log(this.students);
-      
     } else if (this.menuType === 'manage') {
       console.log('load manage menu students');
       this.students = this.stuServ.getStudentsByGradeAndClassOnly(
@@ -102,12 +105,19 @@ export class StudentsAbsentLateListComponent {
         this.onSaveClass();
       }
     });
+
+    this.stuServ.classActiveStatus.subscribe(status => {
+      if(status) {
+        this.currentStatus = null;
+      }
+    })
   }
 
   onDateChange(event: any) {
     this.currentDate = event.target.value;
     console.log(this.currentDate);
     this.stuServ.studentsUpdated.next(true);
+    this.stuServ.setCurrentDate(this.currentDate);
   }
 
   changeStudentAbsentData(stuData: { id: string; absentValue: string }) {
@@ -156,7 +166,7 @@ export class StudentsAbsentLateListComponent {
       // The following date format will output (yyyy-mm-dd) exactly like <input type="date" />
       // const date = new Date().toISOString().split('T')[0];
 
-      const currentStatus = new Status(
+      this.currentStatus = new Status(
         '',
         this.currentDate,
         this.currentActiveGrade,
@@ -164,8 +174,18 @@ export class StudentsAbsentLateListComponent {
         this.students
       );
       console.log('why saving to status here?????');
+      console.log(this.currentStatus);
+      console.log(this.currentDate);
 
-      this.stuServ.saveToStatus(currentStatus);
+      // This line is very important to not duplicate any status in database
+      if (
+        this.currentStatus &&
+        this.currentStatus.classNum === this.stuServ.currentActiveClass &&
+        this.currentStatus.gradeNum === this.stuServ.currentActiveGrade &&
+        this.currentStatus.date === this.stuServ.currentDate
+      ) {
+        this.stuServ.saveToStatus(this.currentStatus);
+      }
 
       // If the menuType === 'manage'
     } else if (this.menuType === 'manage') {

@@ -10,5 +10,6 @@ export class DesignService {
     classChanged = new Subject<number>();
     
     savePressed = new Subject<boolean>();
+    // resetShowList = new Subject<boolean>();
     
 }

@@ -32,5 +32,14 @@ export class MainComponent {
     this.stuServ.classActiveStatus.subscribe((status) => {
       this.showList = !status;
     });
+
+    // this.designService.resetShowList.subscribe(status => {
+    //   if (status) {
+    //     this.showList = false;
+    //     setTimeout(() => {
+    //       this.showList = true;
+    //     }, 2000)
+    //   }
+    // })
   }
 }

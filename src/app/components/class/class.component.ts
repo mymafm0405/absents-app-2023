@@ -39,5 +39,6 @@ export class ClassComponent {
     this.stuServ.setCurrentActiveClass(this.currentClass.classNum);
     this.stuServ.changeClassActiveStatus(false);
     this.designServ.classChanged.next(this.currentClass.classNum);
+    // this.designServ.resetShowList.next(true)
   }
 }

@@ -20,6 +20,8 @@ export class StudentsService {
 
   currentActiveGrade: number;
   currentActiveClass: number;
+  currentDate: string;
+  foundOne = false;
 
   constructor(private http: HttpClient) {}
 
@@ -272,7 +274,14 @@ export class StudentsService {
     this.currentActiveClass = classNum;
   }
 
+  setCurrentDate(currDate: string) {
+    this.currentDate = currDate;
+  }
+
   saveToStatus(currentStatus: Status) {
+    console.log(this.currentActiveClass);
+    console.log(this.currentActiveGrade);
+
     this.savingStatus.next(true);
     // const existStatus = this.status.find((st) => {
     //   if (st.date === currentStatus.date) {
@@ -288,28 +297,45 @@ export class StudentsService {
     //     return false;
     //   }
     // });
-    const existStatus = this.status.find((st) => {
-      st.date === currentStatus.date &&
-        st.gradeNum === currentStatus.gradeNum &&
-        st.classNum === currentStatus.classNum;
-    });
+    console.log(this.status);
+    // const existStatus = this.status.find((st) => {
+    //   st.date === currentStatus.date &&
+    //     st.gradeNum === currentStatus.gradeNum &&
+    //     st.classNum === currentStatus.classNum;
+    // });
 
-    if (existStatus) {
-      // update the exist status in database
-      existStatus.students = currentStatus.students;
-      this.http
-        .patch(
-          'https://alforqan-absents-default-rtdb.firebaseio.com/status/' +
-            existStatus.id +
-            '.json',
-          existStatus
-        )
-        .subscribe((res) => {
-          console.log(res);
-          this.savingStatus.next(false);
-        });
-      //
-    } else {
+    // getAndCheckExistStatus() {
+    //   this.status.forEach(st =>)
+    // }
+    this.status.forEach((st) => {
+      if (st.date === currentStatus.date) {
+        if (
+          st.gradeNum === currentStatus.gradeNum &&
+          st.classNum === currentStatus.classNum
+        ) {
+          this.foundOne = true;
+          currentStatus.id = st.id;
+          this.http
+            .patch(
+              'https://alforqan-absents-default-rtdb.firebaseio.com/status/' +
+                st.id +
+                '.json',
+              currentStatus
+            )
+            .subscribe((data) => {
+              console.log('status updated success');
+              this.savingStatus.next(false);
+              console.log(data);
+              
+              st.students = currentStatus.students;
+            });
+          console.log('foundOne is true');
+        }
+      }
+    });
+    if (this.foundOne === false) {
+      console.log('foundOne is false');
+
       const id = (
         Math.random() +
         this.currentActiveGrade +
@@ -328,9 +354,40 @@ export class StudentsService {
           console.log(resId.name);
           currentStatus.id = resId.name;
           this.status.push(currentStatus);
-          this.savingStatus.next(false);
+          // after saving edit the id again
+          this.http
+            .patch(
+              'https://alforqan-absents-default-rtdb.firebaseio.com/status/' +
+                resId.name +
+                '.json',
+              currentStatus
+            )
+            .subscribe((res) => {
+              console.log(res);
+              this.savingStatus.next(false);
+            });
         });
     }
+    // if (existStatus.gradeNum === currentStatus.gradeNum && existStatus.classNum === currentStatus.classNum) {
+    //   return existStatus;
+    // }
+    // console.log(existStatus);
+
+    // if (existStatus) {
+    //   // update the exist status in database
+    //   existStatus.students = currentStatus.students;
+    //   this.http
+    //     .patch(
+    //       'https://alforqan-absents-default-rtdb.firebaseio.com/status/' +
+    //         existStatus.id +
+    //         '.json',
+    //       existStatus
+    //     )
+    //     .subscribe((res) => {
+    //       console.log(res);
+    //       this.savingStatus.next(false);
+    //     });
+    //   //
   }
 
   saveChangesOnStudents() {
