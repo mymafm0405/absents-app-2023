@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DesignService } from 'src/app/shared/design.service';
 import { Student } from 'src/app/shared/student.model';
 import { StudentsService } from 'src/app/shared/students.service';
 
@@ -46,7 +47,7 @@ export class StudentAbsentLateComponent {
   showPhone = false;
   lateReasonMatched = true;
 
-  constructor(public studServ: StudentsService) {}
+  constructor(public studServ: StudentsService, private designService: DesignService) {}
 
   ngOnInit() {
     this.lateStatus = this.student.late;
@@ -101,5 +102,10 @@ export class StudentAbsentLateComponent {
 
   onDelete() {
     this.studServ.deleteStudent(this.student);
+  }
+
+  onViewReport() {
+    this.studServ.getReportByStudentId(this.student)
+    this.designService.menuChanged.next({type: 'report', name: 'تقرير الطالب'});
   }
 }

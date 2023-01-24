@@ -22,6 +22,7 @@ export class StudentsService {
   currentActiveClass: number;
   currentDate: string;
   foundOne = false;
+  studentSummary: {date: string, student: Student}[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -326,7 +327,7 @@ export class StudentsService {
               console.log('status updated success');
               this.savingStatus.next(false);
               console.log(data);
-              
+
               st.students = currentStatus.students;
             });
           console.log('foundOne is true');
@@ -490,5 +491,44 @@ export class StudentsService {
     console.log(foundStudents);
 
     return foundStudents;
+  }
+
+  getReportByStudentId(student: Student) {
+    const foundStatusForGradeAndClass = this.status.filter((st) => {
+      if (
+        st.classNum === student.classNum &&
+        st.gradeNum === student.gradeNum
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    const foundStatusIncludedThisStudent = foundStatusForGradeAndClass.filter(
+      (st) => {
+        if (st.students.find((stu) => stu.id === student.id)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    );
+
+    const summary: { date: string; student: Student }[] = [];
+
+    foundStatusIncludedThisStudent.forEach((st) => {
+      summary.push({
+        date: st.date,
+        student: st.students.find((stu) => stu.id === student.id),
+      });
+    });
+
+    console.log(summary);
+    this.studentSummary = summary;
+  }
+
+  clearStudentSummary() {
+    this.studentSummary = [];
   }
 }
