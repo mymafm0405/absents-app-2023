@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DesignService } from 'src/app/shared/design.service';
 import { Student } from 'src/app/shared/student.model';
 import { StudentsService } from 'src/app/shared/students.service';
 
@@ -19,12 +20,21 @@ export class StudentsReportListComponent {
 
   stuSummary: { date: string; student: Student }[] = [];
   reportPeriod: { date: string; student: Student }[] = [];
+  currentAbsentsCounterForStudent = 0;
 
-  constructor(public studServ: StudentsService) {}
+  constructor(
+    public studServ: StudentsService,
+    private designServ: DesignService
+  ) {}
 
   ngOnInit() {
     this.stuSummary = this.studServ.studentSummary;
     console.log(this.stuSummary);
+
+    // This is to reset the stuSummary after menu clicked
+    this.designServ.menuChanged.subscribe((data) => {
+      this.stuSummary = [];
+    });
   }
 
   onDateFromChange() {
@@ -64,15 +74,30 @@ export class StudentsReportListComponent {
   }
 
   onShowStudentReport() {
+    this.currentAbsentsCounterForStudent = 0;
     this.optionClicked = true;
     this.reportPeriod = this.stuSummary.filter((st) => {
       const stDateTime = new Date(st.date).getTime();
       if (stDateTime >= this.dateFromTime && stDateTime <= this.dateToTime) {
-        return true;
+        // only return students have absent true or late true
+        if (st.student.absent || st.student.late) {
+          if (st.student.absent && st.student.reason === 'غائب') {
+            this.currentAbsentsCounterForStudent = this.currentAbsentsCounterForStudent + 1;
+          }
+          return true;
+        } else {
+          return false;
+        }
       } else {
         return false;
       }
     });
     console.log(this.reportPeriod);
+  }
+
+  onViewReport(student: Student, counter: number) {
+    this.studServ.getReportByStudentId(student);
+    this.stuSummary = this.studServ.studentSummary;
+    // this.designService.menuChanged.next({type: 'report', name: 'تقرير الطالب'});
   }
 }

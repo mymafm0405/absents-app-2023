@@ -106,6 +106,7 @@
     <table class="table table-striped">
       <tbody>
         <tr>
+          <th>تقرير الـطـالـب</th>
           <th *ngIf="selectedDateFrom !== selectedDateTo">عدد مرات الغياب</th>
           <th>الـسـبـب</th>
           <th>إسم الطـالب</th>
@@ -113,6 +114,14 @@
           <th>الـشـعـبة</th>
         </tr>
         <tr *ngFor="let item of myReturnedStudents">
+          <td>
+            <button
+              class="btn btn-default"
+              (click)="onViewReport(item.student, item.counter)"
+            >
+              <span class="glyphicon glyphicon-list-alt"></span>
+            </button>
+          </td>
           <td *ngIf="selectedDateFrom !== selectedDateTo">
             {{ item.counter }}
           </td>
@@ -131,39 +140,53 @@
   <div class="col-xs-12">
     <h2>الطالب: {{ stuSummary[0].student.name }}</h2>
     <h3>
-      <span style="color: red; border: 1px solid #333; border-radius: 7px; padding: 10px 40px; background-color: #ffdede;"
+      <span
+        style="
+          color: red;
+          border: 1px solid #333;
+          border-radius: 7px;
+          padding: 10px 40px;
+          background-color: #ffdede;
+        "
         >{{ stuSummary[0].student.classNum }} -
         {{ stuSummary[0].student.gradeNum }}</span
       >
     </h3>
+    <h3 *ngIf="currentAbsentsCounterForStudent > 0">
+      <span style="color: #0078da">
+        ({{ currentAbsentsCounterForStudent }}) عدد مرات الغياب</span
+      >
+    </h3>
   </div>
-  <!-- <div class="col-xs-12">
+
+  <!-- This table for student report -->
+  <div class="col-xs-12">
     <table class="table table-striped">
       <tbody>
         <tr>
-          <th *ngIf="selectedDateFrom !== selectedDateTo">عدد مرات الغياب</th>
-          <th>الـسـبـب</th>
-          <th>إسم الطـالب</th>
-          <th>الفـصـل</th>
-          <th>الـشـعـبة</th>
+          <th>الـحـالـة</th>
+          <th>الـتـاريـخ</th>
         </tr>
-        <tr *ngFor="let item of myReturnedStudents">
-          <td *ngIf="selectedDateFrom !== selectedDateTo">
-            {{ item.counter }}
+        <tr *ngFor="let info of reportPeriod">
+          <td
+            [ngStyle]="{
+              color: info.student.reason === 'غائب' ? 'red' : 'black'
+            }"
+          >
+            {{ info.student.reason }}
           </td>
-          <td>{{ item.student.reason }}</td>
-          <td>{{ item.student.name }}</td>
-          <td>{{ item.student.classNum }}</td>
-          <td>{{ item.student.gradeNum }}</td>
+          <td>{{ info.date }}</td>
         </tr>
       </tbody>
     </table>
-  </div> -->
+  </div>
 </div>
 <div
   class="row text-center"
   style="margin-top: 30px"
-  *ngIf="optionClicked && myReturnedStudents.length === 0"
+  *ngIf="
+    optionClicked && myReturnedStudents.length === 0 && stuSummary.length === 0
+  "
 >
   <div class="col-xs-12">
     <div class="alert alert-danger">
