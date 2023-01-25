@@ -136,7 +136,7 @@
 </div>
 
 <!-- This table for student report only -->
-<div class="row my-table" *ngIf="optionClicked && stuSummary.length > 0">
+<div class="row my-table" *ngIf="optionClicked && stuSummary.length > 0 && reportPeriod.length > 0">
   <div class="col-xs-12">
     <h2>الطالب: {{ stuSummary[0].student.name }}</h2>
     <h3>
