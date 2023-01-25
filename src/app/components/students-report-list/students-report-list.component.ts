@@ -34,6 +34,8 @@ export class StudentsReportListComponent {
     // This is to reset the stuSummary after menu clicked
     this.designServ.menuChanged.subscribe((data) => {
       this.stuSummary = [];
+      this.reportPeriod = [];
+      this.currentAbsentsCounterForStudent = 0;
     });
   }
 
