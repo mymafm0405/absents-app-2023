@@ -17,6 +17,7 @@ export class StudentsReportListComponent {
   foundStudents: Student[] = [];
   myReturnedStudents: { student: Student; counter: number }[] = [];
   optionClicked = false;
+  absentOrLate = ''
 
   stuSummary: { date: string; student: Student }[] = [];
   reportPeriod: { date: string; student: Student }[] = [];
@@ -57,6 +58,7 @@ export class StudentsReportListComponent {
   // }
 
   onLate() {
+    this.absentOrLate = 'التـأخر'
     this.optionClicked = true;
     // this.foundStudents = this.studServ.getAllLateByDate(this.selectedDate);
 
@@ -67,6 +69,7 @@ export class StudentsReportListComponent {
   }
 
   onAbsents() {
+    this.absentOrLate = 'الغـيـاب'
     this.optionClicked = true;
     // this.foundStudents = this.studServ.getAllAbsentsByDate(this.selectedDate);
     this.myReturnedStudents = this.studServ.getAbsentsStudentsFromToDate(

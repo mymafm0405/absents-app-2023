@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class SideMenuComponent {
   menus = [
-    { type: 'insert', name: 'إدخال البيانات' },
+    { type: 'insert', name: 'ادخال البيانات' },
     { type: 'manage', name: 'الإدارة' },
     { type: 'report', name: 'التقارير' },
   ];

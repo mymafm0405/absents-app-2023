@@ -107,13 +107,14 @@
       <tbody>
         <tr>
           <th>تقرير الـطـالـب</th>
-          <th *ngIf="selectedDateFrom !== selectedDateTo">عدد مرات الغياب</th>
+          <th *ngIf="selectedDateFrom !== selectedDateTo">عدد مرات {{ absentOrLate }}</th>
           <th>الـسـبـب</th>
           <th>إسم الطـالب</th>
           <th>الفـصـل</th>
           <th>الـشـعـبة</th>
+          <th>الرقم</th>
         </tr>
-        <tr *ngFor="let item of myReturnedStudents">
+        <tr *ngFor="let item of myReturnedStudents; let i = index">
           <td>
             <button
               class="btn btn-default"
@@ -129,6 +130,7 @@
           <td>{{ item.student.name }}</td>
           <td>{{ item.student.classNum }}</td>
           <td>{{ item.student.gradeNum }}</td>
+          <td><span style="padding: 5px 10px; font-weight:bold; border-radius: 7px; background-color: #FFEFEF;">{{ i + 1 }}</span></td>
         </tr>
       </tbody>
     </table>
