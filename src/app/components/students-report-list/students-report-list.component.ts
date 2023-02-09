@@ -76,6 +76,8 @@ export class StudentsReportListComponent {
       this.dateFromTime,
       this.dateToTime
     );
+    console.log(this.myReturnedStudents);
+    
   }
 
   onShowStudentReport() {

@@ -414,13 +414,16 @@ export class StudentsService {
 
     console.log(dateFromTime);
     console.log(dateToTime);
-
+    console.log(this.status);
+    
     this.status.forEach((stat) => {
       let counter = 0;
       const statDateTime = new Date(stat.date).getTime();
       console.log(statDateTime);
 
       if (statDateTime >= dateFromTime && statDateTime <= dateToTime) {
+        console.log(stat.students);
+        
         stat.students.forEach((student) => {
           if (dateFromTime === dateToTime) {
             if (student.absent) {
