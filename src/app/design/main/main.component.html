@@ -2,7 +2,7 @@
   <div class="col-xs-12">
     <div class="current-comp">
       <h2>{{ menu.name }}</h2>
-      <div *ngIf="menu.type !== 'report'">
+      <div *ngIf="menu.type !== 'report' && menu.type !== 'password'">
         <app-grades-list></app-grades-list>
         <h3 *ngIf="!gradeNum && menu.type !== 'report'" class="select-grade">
           قم بإختيار الشعبة
@@ -19,6 +19,12 @@
         ></app-students-report-list>
       </div>
       <!---->
+      <!-- Show change password section -->
+      <div class="row" *ngIf="menu.type === 'password'">
+        <div class="col-xs-4 col-xs-push-4 change-password">
+          <app-change-password></app-change-password>
+        </div>
+      </div>
     </div>
   </div>
 </div>

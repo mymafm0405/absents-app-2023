@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { StudentsService } from './shared/students.service';
+import { User } from './shared/user.model';
+import { UsersService } from './shared/user.service';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +16,21 @@ export class AppComponent {
   manageSelected = false;
   reportSelected = false;
   menu = '';
+  loginStatus = false;
 
-  constructor(public stuServ: StudentsService) {}
+  constructor(public stuServ: StudentsService, private usersServ: UsersService ) {}
 
   ngOnInit() {
+    // This function will be run for once to add a user temp.
+    // const user = new User('1', 'admin', '123456', 'Ahmed', [], [], 'admin')
+    // this.usersServ.addUser(user);
+
+    this.loginStatus = this.usersServ.loginStatus;
+
+    this.usersServ.loginChanged.subscribe((status) => {
+      this.loginStatus = status;
+    })
+
     this.stuServ.classActiveStatus.subscribe((status) => {
       this.showList = !status;
     });
@@ -38,6 +51,9 @@ export class AppComponent {
 
     // Load all students from server
     this.stuServ.loadAllStudentsFromServer()
+
+    // Load all users from server
+    this.usersServ.getAllUsers();
   }
 
   onManage() {

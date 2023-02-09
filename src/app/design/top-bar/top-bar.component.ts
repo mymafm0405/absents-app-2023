@@ -1,37 +1,49 @@
 import { Component } from '@angular/core';
 import { DesignService } from 'src/app/shared/design.service';
 import { StudentsService } from 'src/app/shared/students.service';
+import { UsersService } from 'src/app/shared/user.service';
 
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.css']
+  styleUrls: ['./top-bar.component.css'],
 })
 export class TopBarComponent {
   gradeNum: number;
   classNum: number;
   update = false;
   saving = false;
+  loginStatus = false;
 
-  constructor(private designServ: DesignService, private stuServ: StudentsService) {}
+  constructor(
+    private designServ: DesignService,
+    private stuServ: StudentsService,
+    private usersServ: UsersService
+  ) {}
 
   ngOnInit() {
-    this.designServ.gradeChanged.subscribe(gradeNum => {
+    this.loginStatus = this.usersServ.loginStatus;
+
+    this.usersServ.loginChanged.subscribe((status) => {
+      this.loginStatus = status;
+    });
+
+    this.designServ.gradeChanged.subscribe((gradeNum) => {
       this.gradeNum = gradeNum;
-    })
-    this.designServ.classChanged.subscribe(classNum => {
+    });
+    this.designServ.classChanged.subscribe((classNum) => {
       this.classNum = classNum;
-    })
+    });
     this.stuServ.lateOrAbsentsStatusChanged.subscribe((status) => {
       if (status) {
         this.update = true;
       } else {
         this.update = false;
       }
-    })
-    this.stuServ.savingStatus.subscribe(status => {
+    });
+    this.stuServ.savingStatus.subscribe((status) => {
       this.saving = status;
-    })
+    });
   }
 
   onClose() {
@@ -45,6 +57,17 @@ export class TopBarComponent {
   }
 
   onSave() {
-    this.designServ.savePressed.next(true)
+    this.designServ.savePressed.next(true);
+  }
+
+  onSignOut() {
+    this.usersServ.signOut();
+  }
+
+  onChangePassword() {
+    this.designServ.menuChanged.next({
+      type: 'password',
+      name: 'تـغـيير كـلـمة المـرور',
+    });
   }
 }

@@ -9,57 +9,21 @@
       <app-top-bar></app-top-bar>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="loginStatus">
+    <div class="col-xs-9 print-report">
+      <app-main></app-main>
+    </div>
     <div class="col-xs-3 no-print">
       <app-side-menu></app-side-menu>
     </div>
-    <div class="col-xs-9 print-report">
-      <app-main></app-main>
+  </div>
+  <div class="row" *ngIf="!loginStatus">
+    <div class="col-xs-4 col-xs-push-4 login-form">
+      <app-user></app-user>
     </div>
   </div>
 </div>
 
-<!-- OLD DESIGN -->
-<!-- <div class="container">
-  <div class="row text-center">
-    <div class="col-xs-12">
-      <h1>Absents App 2023</h1>
-    </div>
-  </div>
-  <hr /> -->
-  <!-- <div class="row text-center">
-    <div class="col-xs-4">
-      <button
-        class="btn btn-danger btn-lg"
-        (click)="onManage()"
-        [disabled]="saving || insertSelected"
-      >
-        Manage
-      </button>
-    </div>
-    <div class="col-xs-4">
-      <button class="btn btn-warning btn-lg" (click)="onReport()">
-        Reports
-      </button>
-    </div>
-    <div class="col-xs-4">
-      <button
-        class="btn btn-success btn-lg"
-        (click)="onInsert()"
-        [disabled]="saving || manageSelected"
-      >
-        Insert
-      </button>
-    </div>
-  </div> -->
-  <!-- <app-grades-list
-    [menuName]="menu"
-    *ngIf="insertSelected || manageSelected"
-  ></app-grades-list> -->
-  <!-- <app-students-manage-list *ngIf="showManageList"></app-students-manage-list> -->
-  <!-- <app-students-absent-late-list
-    [menuType]="menu"
-    *ngIf="showList"
-  ></app-students-absent-late-list> -->
-  <app-students-report-list *ngIf="reportSelected"></app-students-report-list>
-<!-- </div> -->
+<app-students-report-list
+  *ngIf="reportSelected && loginStatus"
+></app-students-report-list>

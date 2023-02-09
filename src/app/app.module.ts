@@ -21,6 +21,8 @@ import { TopBarComponent } from './design/top-bar/top-bar.component';
 import { SideMenuComponent } from './design/side-menu/side-menu.component';
 import { MainComponent } from './design/main/main.component';
 import { ItemComponent } from './design/side-menu/item/item.component';
+import { UserComponent } from './components/user/user.component';
+import { ChangePasswordComponent } from './components/user/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { ItemComponent } from './design/side-menu/item/item.component';
     SideMenuComponent,
     MainComponent,
     ItemComponent,
+    UserComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
