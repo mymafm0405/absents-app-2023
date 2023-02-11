@@ -7,15 +7,35 @@ import { User } from './user.model';
   providedIn: 'root',
 })
 export class UsersService {
+  passwordChanged = new Subject<boolean>();
   loginChanged = new Subject<boolean>();
 
   loginStatus: boolean;
+  currentUser: User;
+
   users: User[] = [];
 
   constructor(private http: HttpClient) {}
 
   getLoginStatus() {
     return this.loginStatus;
+  }
+
+  changePassword(newPassword: string) {
+    console.log(newPassword);
+
+    this.currentUser.password = newPassword;
+
+    this.http
+      .patch(
+        'https://alforqan-absents-default-rtdb.firebaseio.com/users/' +
+          this.currentUser.id +
+          '.json',
+        this.currentUser
+      )
+      .subscribe((res) => {
+        this.passwordChanged.next(true);
+      });
   }
 
   getAllUsers() {
@@ -40,6 +60,7 @@ export class UsersService {
     if (foundUser) {
       this.loginStatus = true;
       this.loginChanged.next(true);
+      this.currentUser = foundUser;
       console.log('logged in');
     } else if (!foundUser) {
       this.loginChanged.next(false);

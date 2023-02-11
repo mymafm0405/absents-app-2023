@@ -34,6 +34,15 @@ export class TopBarComponent {
     this.designServ.classChanged.subscribe((classNum) => {
       this.classNum = classNum;
     });
+
+    this.designServ.menuChanged.subscribe((data) => {
+      // This is to clear the grade and class.
+      this.stuServ.changeClassActiveStatus(true);
+      this.stuServ.changeGradeActiveStatus(true);
+      this.gradeNum = null;
+      this.classNum = null;
+    });
+
     this.stuServ.lateOrAbsentsStatusChanged.subscribe((status) => {
       if (status) {
         this.update = true;
@@ -61,6 +70,12 @@ export class TopBarComponent {
   }
 
   onSignOut() {
+    // This is to clear the grade and class.
+    this.stuServ.changeClassActiveStatus(true);
+    this.stuServ.changeGradeActiveStatus(true);
+    this.gradeNum = null;
+    this.classNum = null;
+
     this.usersServ.signOut();
   }
 
