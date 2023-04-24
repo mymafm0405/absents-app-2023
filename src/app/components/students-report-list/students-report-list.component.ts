@@ -26,7 +26,7 @@ export class StudentsReportListComponent {
   constructor(
     public studServ: StudentsService,
     private designServ: DesignService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.stuSummary = this.studServ.studentSummary;
@@ -66,8 +66,10 @@ export class StudentsReportListComponent {
       this.dateFromTime,
       this.dateToTime
     );
+    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.gradeNum - b.student.gradeNum)
+    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.classNum - b.student.classNum)
   }
-
+  
   onAbsents() {
     this.absentOrLate = 'الغـيـاب'
     this.optionClicked = true;
@@ -78,6 +80,15 @@ export class StudentsReportListComponent {
     );
     console.log(this.myReturnedStudents);
     
+    // // descending
+    // let newarr = array.sort((a, b) => b.index - a.index);
+    
+    // //ascending
+    // let newarr = array.sort((a, b) => a.index - b.index);
+    
+    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.gradeNum - b.student.gradeNum)
+    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.classNum - b.student.classNum)
+
   }
 
   onShowStudentReport() {
