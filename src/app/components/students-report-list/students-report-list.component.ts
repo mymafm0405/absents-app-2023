@@ -66,8 +66,8 @@ export class StudentsReportListComponent {
       this.dateFromTime,
       this.dateToTime
     );
-    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.gradeNum - b.student.gradeNum)
     this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.classNum - b.student.classNum)
+    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.gradeNum - b.student.gradeNum)
   }
   
   onAbsents() {
@@ -86,8 +86,8 @@ export class StudentsReportListComponent {
     // //ascending
     // let newarr = array.sort((a, b) => a.index - b.index);
     
-    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.gradeNum - b.student.gradeNum)
     this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.classNum - b.student.classNum)
+    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.gradeNum - b.student.gradeNum)
 
   }
 
