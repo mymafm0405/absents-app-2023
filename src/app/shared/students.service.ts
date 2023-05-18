@@ -243,6 +243,7 @@ export class StudentsService {
       console.log('Freshhh students');
       console.log(freshStudent);
       console.log('Test array');
+      this.foundOne = false;
       return freshStudent;
     }
   }

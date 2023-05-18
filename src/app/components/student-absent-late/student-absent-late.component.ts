@@ -47,7 +47,7 @@ export class StudentAbsentLateComponent {
   showPhone = false;
   lateReasonMatched = true;
 
-  constructor(public studServ: StudentsService, private designService: DesignService) {}
+  constructor(public studServ: StudentsService, private designService: DesignService) { }
 
   ngOnInit() {
     this.lateStatus = this.student.late;
@@ -66,7 +66,11 @@ export class StudentAbsentLateComponent {
       this.lateDisabled = false;
     }
     console.log({ id: stuId, absentValue: event.target.value });
-    this.absentChange.emit({ id: stuId, absentValue: event.target.value });
+    if (!stuId) {
+      alert('Can not find student id');
+    } else {
+      this.absentChange.emit({ id: stuId, absentValue: event.target.value });
+    }
   }
 
   onLateChange(event: any, stuId: string) {
@@ -106,6 +110,6 @@ export class StudentAbsentLateComponent {
 
   onViewReport() {
     this.studServ.getReportByStudentId(this.student)
-    this.designService.menuChanged.next({type: 'report', name: 'تقرير الطالب'});
+    this.designService.menuChanged.next({ type: 'report', name: 'تقرير الطالب' });
   }
 }
