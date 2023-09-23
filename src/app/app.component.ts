@@ -17,10 +17,18 @@ export class AppComponent {
   reportSelected = false;
   menu = '';
   loginStatus = false;
+  // results = [
+  //   ["Col1", "Col2", "Col3", "Col4"],
+  //   ["Data", 50, 100, 500],
+  //   ["Data", -100, 20, 100],
+  //   ];
 
   constructor(public stuServ: StudentsService, private usersServ: UsersService ) {}
 
   ngOnInit() {
+
+    //TEST EXPORT TO EXCEL
+    // this.exportToCsv()
     // This function will be run for once to add a user temp.
     // const user = new User('1', 'admin', '123456', 'Ahmed', [], [], 'admin')
     // this.usersServ.addUser(user);
@@ -55,6 +63,25 @@ export class AppComponent {
     // Load all users from server
     this.usersServ.getAllUsers();
   }
+
+
+
+    // exportToCsv() {
+    //   var CsvString = "";
+    //   this.results.forEach(function(RowItem, RowIndex) {
+    //     RowItem.forEach(function(ColItem, ColIndex) {
+    //       CsvString += ColItem + ',';
+    //     });
+    //     CsvString += "\r\n";
+    //   });
+    //   CsvString = "data:application/csv," + encodeURIComponent(CsvString);
+    //   var x = document.createElement("A");
+    //   x.setAttribute("href", CsvString );
+    //   x.setAttribute("download","somedata.csv");
+    //   document.body.appendChild(x);
+    //   x.click();
+    // }
+
 
   onManage() {
     this.manageSelected = true;

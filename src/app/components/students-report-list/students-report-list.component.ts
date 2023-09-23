@@ -17,16 +17,26 @@ export class StudentsReportListComponent {
   foundStudents: Student[] = [];
   myReturnedStudents: { student: Student; counter: number }[] = [];
   optionClicked = false;
-  absentOrLate = ''
+  absentOrLate = '';
 
   stuSummary: { date: string; student: Student }[] = [];
   reportPeriod: { date: string; student: Student }[] = [];
   currentAbsentsCounterForStudent = 0;
 
+  results = [
+    // ['الرقم', 'الاسم', 'الشعبة', 'الصف', 'عدد المرات'],
+    [{ title: '1' }, { title: '2' }, { title: '3' }],
+    // [{name: 'mido', age: 16, city: 'Alex'}, {name: 'adam', age: 3, city: 'Qatar'}]
+    [...this.myReturnedStudents],
+  ];
+
+  itemsgrouped = [];
+  fileTitle = '';
+
   constructor(
     public studServ: StudentsService,
     private designServ: DesignService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.stuSummary = this.studServ.studentSummary;
@@ -38,6 +48,25 @@ export class StudentsReportListComponent {
       this.reportPeriod = [];
       this.currentAbsentsCounterForStudent = 0;
     });
+  }
+
+  exportToCsv() {
+    console.log(this.results);
+    console.log(this.myReturnedStudents);
+    var CsvString = '';
+    this.itemsgrouped.forEach(function (RowItem, RowIndex) {
+      RowItem.forEach(function (ColItem, ColIndex) {
+        console.log(ColItem);
+        CsvString += ColItem + ',';
+      });
+      CsvString += '\r\n';
+    });
+    CsvString = 'data:application/csv,' + encodeURIComponent(CsvString);
+    var x = document.createElement('A');
+    x.setAttribute('href', CsvString);
+    x.setAttribute('download', this.fileTitle + '.csv');
+    document.body.appendChild(x);
+    x.click();
   }
 
   onDateFromChange() {
@@ -58,7 +87,9 @@ export class StudentsReportListComponent {
   // }
 
   onLate() {
-    this.absentOrLate = 'التـأخر'
+    this.myReturnedStudents = [];
+    this.itemsgrouped = [];
+    this.absentOrLate = 'التـأخر';
     this.optionClicked = true;
     // this.foundStudents = this.studServ.getAllLateByDate(this.selectedDate);
 
@@ -66,29 +97,59 @@ export class StudentsReportListComponent {
       this.dateFromTime,
       this.dateToTime
     );
-    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.classNum - b.student.classNum)
-    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.gradeNum - b.student.gradeNum)
+
+    this.myReturnedStudents = this.myReturnedStudents.sort(
+      (a, b) => a.student.classNum - b.student.classNum
+    );
+    this.myReturnedStudents = this.myReturnedStudents.sort(
+      (a, b) => a.student.gradeNum - b.student.gradeNum
+    );
+
+    this.makeExcelReady('تقرير تآخير');
   }
-  
+
   onAbsents() {
-    this.absentOrLate = 'الغـيـاب'
+    this.myReturnedStudents = [];
+    this.itemsgrouped = [];
+    this.absentOrLate = 'الغـيـاب';
     this.optionClicked = true;
     // this.foundStudents = this.studServ.getAllAbsentsByDate(this.selectedDate);
     this.myReturnedStudents = this.studServ.getAbsentsStudentsFromToDate(
       this.dateFromTime,
       this.dateToTime
     );
-    console.log(this.myReturnedStudents);
-    
+
     // // descending
     // let newarr = array.sort((a, b) => b.index - a.index);
-    
+
     // //ascending
     // let newarr = array.sort((a, b) => a.index - b.index);
-    
-    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.classNum - b.student.classNum)
-    this.myReturnedStudents = this.myReturnedStudents.sort((a, b) => a.student.gradeNum - b.student.gradeNum)
 
+    this.myReturnedStudents = this.myReturnedStudents.sort(
+      (a, b) => a.student.classNum - b.student.classNum
+    );
+    this.myReturnedStudents = this.myReturnedStudents.sort(
+      (a, b) => a.student.gradeNum - b.student.gradeNum
+    );
+
+    this.makeExcelReady('تقرير غياب');
+  }
+
+  makeExcelReady(fileName) {
+    this.fileTitle =
+      fileName + ' ' + this.selectedDateFrom + ' إلى ' + this.selectedDateTo;
+
+    this.itemsgrouped.push(['Name', 'Grade', 'Class', 'Reason', 'Counter']);
+
+    for (var i = 0; i < this.myReturnedStudents.length; i++) {
+      this.itemsgrouped.push([
+        this.myReturnedStudents[i].student.name,
+        this.myReturnedStudents[i].student.gradeNum,
+        this.myReturnedStudents[i].student.classNum,
+        this.myReturnedStudents[i].student.reason,
+        this.myReturnedStudents[i].counter,
+      ]);
+    }
   }
 
   onShowStudentReport() {
@@ -100,7 +161,8 @@ export class StudentsReportListComponent {
         // only return students have absent true or late true
         if (st.student.absent || st.student.late) {
           if (st.student.absent && st.student.reason === 'غائب') {
-            this.currentAbsentsCounterForStudent = this.currentAbsentsCounterForStudent + 1;
+            this.currentAbsentsCounterForStudent =
+              this.currentAbsentsCounterForStudent + 1;
           }
           return true;
         } else {
