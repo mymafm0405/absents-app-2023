@@ -1,0 +1,19 @@
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+.side-menu {
+    background-color: #313541;
+    height: 600px;
+    text-align: center;
+    color: white;
+    margin: 10px 0px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px #333;
+}
+.co {
+    padding: 0 10px;
+}

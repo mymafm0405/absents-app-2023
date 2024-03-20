@@ -1,0 +1,18 @@
+.header {
+    background-color: #313541;
+    height: 160px;
+    text-align: center;
+    color: white;
+    padding-top: 15px;
+    margin: 20px 0px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px #333;
+}
+h1 {
+    color: wheat;
+}
+.logo {
+    width: 130px;
+    margin: 0 auto;
+    padding-top: 10px;
+}

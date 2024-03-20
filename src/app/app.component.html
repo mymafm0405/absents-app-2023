@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <app-header></app-header>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <app-top-bar></app-top-bar>
+    </div>
+  </div>
+  <div class="row" *ngIf="loginStatus">
+    <div class="col-xs-9 print-report">
+      <app-main></app-main>
+    </div>
+    <div class="col-xs-3 no-print">
+      <app-side-menu></app-side-menu>
+    </div>
+  </div>
+  <div class="row" *ngIf="!loginStatus">
+    <div class="col-xs-4 col-xs-push-4 login-form">
+      <app-user></app-user>
+    </div>
+  </div>
+</div>
+
+<app-students-report-list
+  *ngIf="reportSelected && loginStatus"
+></app-students-report-list>

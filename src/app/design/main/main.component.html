@@ -1,0 +1,38 @@
+<div class="row" *ngIf="menu">
+  <div class="col-xs-12">
+    <div class="current-comp">
+      <h2>{{ menu.name }}</h2>
+      <div *ngIf="menu.type !== 'report' && menu.type !== 'password'">
+        <app-grades-list></app-grades-list>
+        <h3 *ngIf="!gradeNum && menu.type !== 'report'" class="select-grade">
+          قم بإختيار الشعبة
+        </h3>
+        <app-students-absent-late-list
+          [menuType]="menu.type"
+          *ngIf="showList"
+        ></app-students-absent-late-list>
+      </div>
+      <!-- Show report section -->
+      <div class="report-section">
+        <app-students-report-list
+          *ngIf="menu.type === 'report'"
+        ></app-students-report-list>
+      </div>
+      <!---->
+      <!-- Show change password section -->
+      <div class="row" *ngIf="menu.type === 'password'">
+        <div class="col-xs-4 col-xs-push-4 change-password">
+          <app-change-password></app-change-password>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="!menu">
+  <div class="col-xs-12">
+    <div class="current-comp">
+      <h1>نظام تسجيل الغياب والحضور</h1>
+      <h3>من فضلك إختر من القائمة الرئيسية</h3>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+@media print {
+  .no-print,
+  .no-print * {
+    width: 0 !important;
+  }
+  .print-report {
+    width: 100%;
+  }
+}
+.container {
+  background-color: #eef2f5;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.login-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  text-align: right;
+  margin: 40px 0;
+  box-shadow: 10px 10px 20px #ccc;
+}

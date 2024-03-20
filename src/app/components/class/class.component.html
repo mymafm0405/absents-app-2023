@@ -1,0 +1,15 @@
+<div class="cl" [ngClass]="{ faded: faded }">
+  <h2><span class="glyphicon glyphicon-blackboard"></span></h2>
+  <button
+    class="btn"
+    [ngStyle]="{
+      backgroundColor: selected ? '#005FBE' : '#64c3e8',
+      color: selected ? 'white' : '#333',
+      border: selected ? '2px solid green' : ''
+    }"
+    (click)="onClassClick()"
+    [disabled]="!active"
+  >
+    {{ currentClass.classNum }}
+  </button>
+</div>
